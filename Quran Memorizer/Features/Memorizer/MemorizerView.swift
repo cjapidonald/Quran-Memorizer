@@ -13,6 +13,7 @@ struct MemorizerView: View {
     @State private var showFullscreen = false
     @State private var fullScreenSurah: Surah? = nil
     @State private var fullScreenText: SurahTextContent? = nil
+    @State private var resumePlaybackAfterFullscreen = false
 
     var body: some View {
         NavigationStack {
@@ -56,7 +57,11 @@ struct MemorizerView: View {
                 ensureValidReadingTheme()
             }
         }
-        .fullScreenCover(isPresented: $showFullscreen) {
+        .fullScreenCover(isPresented: $showFullscreen, onDismiss: {
+            fullScreenSurah = nil
+            fullScreenText = nil
+            resumePlaybackAfterFullscreen = false
+        }) {
             if let surah = fullScreenSurah, let text = fullScreenText {
                 fullScreenReader(for: surah, text: text)
             }
@@ -260,6 +265,7 @@ struct MemorizerView: View {
                 Button {
                     fullScreenSurah = surah
                     fullScreenText = text
+                    resumePlaybackAfterFullscreen = mem.isPlaying
                     showFullscreen = true
                 } label: {
                     Label("Fullscreen", systemImage: "arrow.up.left.and.arrow.down.right")
@@ -473,10 +479,18 @@ struct MemorizerView: View {
             }
             .background(readingPalette.backgroundGradient.ignoresSafeArea())
             .navigationTitle(surah.englishName)
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Done") { showFullscreen = false }
                 }
+            }
+            .toolbarBackground(.visible, for: .navigationBar)
+            .toolbarBackground(Color.clear, for: .navigationBar)
+        }
+        .onAppear {
+            if resumePlaybackAfterFullscreen && !mem.isPlaying {
+                mem.play()
             }
         }
     }
