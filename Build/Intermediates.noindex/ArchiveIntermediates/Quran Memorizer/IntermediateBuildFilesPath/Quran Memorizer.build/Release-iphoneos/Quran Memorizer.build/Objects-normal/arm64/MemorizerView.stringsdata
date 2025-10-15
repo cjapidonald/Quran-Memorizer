@@ -100,10 +100,26 @@
       },
       {
         "comment": "",
+        "key": "Playback speed",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 246
+        }
+      },
+      {
+        "comment": "",
+        "key": "%.2f×",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 250
+        }
+      },
+      {
+        "comment": "",
         "key": "Set A",
         "location": {
           "startingColumn": 30,
-          "startingLine": 250
+          "startingLine": 265
         }
       },
       {
@@ -111,7 +127,7 @@
         "key": "Set B",
         "location": {
           "startingColumn": 30,
-          "startingLine": 254
+          "startingLine": 269
         }
       },
       {
@@ -119,7 +135,7 @@
         "key": "Loop",
         "location": {
           "startingColumn": 23,
-          "startingLine": 260
+          "startingLine": 275
         }
       },
       {
@@ -127,7 +143,7 @@
         "key": "Surah text",
         "location": {
           "startingColumn": 22,
-          "startingLine": 281
+          "startingLine": 296
         }
       },
       {
@@ -135,7 +151,7 @@
         "key": "Fullscreen",
         "location": {
           "startingColumn": 27,
-          "startingLine": 291
+          "startingLine": 306
         }
       },
       {
@@ -143,7 +159,7 @@
         "key": "Double-tap an ayah to toggle its memorized status.",
         "location": {
           "startingColumn": 18,
-          "startingLine": 327
+          "startingLine": 342
         }
       },
       {
@@ -151,7 +167,7 @@
         "key": "Language",
         "location": {
           "startingColumn": 20,
-          "startingLine": 313
+          "startingLine": 328
         }
       },
       {
@@ -159,7 +175,7 @@
         "key": "No ayahs memorized yet.",
         "location": {
           "startingColumn": 23,
-          "startingLine": 332
+          "startingLine": 347
         }
       },
       {
@@ -167,7 +183,7 @@
         "key": "Reading background",
         "location": {
           "startingColumn": 22,
-          "startingLine": 321
+          "startingLine": 336
         }
       },
       {
@@ -175,7 +191,7 @@
         "key": "%lld",
         "location": {
           "startingColumn": 18,
-          "startingLine": 426
+          "startingLine": 441
         }
       },
       {
@@ -183,7 +199,7 @@
         "key": "Done",
         "location": {
           "startingColumn": 28,
-          "startingLine": 514
+          "startingLine": 529
         }
       },
       {
@@ -191,7 +207,7 @@
         "key": "Choose a surah from the Surahs tab.",
         "location": {
           "startingColumn": 18,
-          "startingLine": 531
+          "startingLine": 546
         }
       }
     ]
