@@ -322,9 +322,6 @@ final class MemorizerState: ObservableObject {
 
     deinit {
         resourceTask?.cancel()
-        let request = resourceRequest
-        Task { @MainActor [request] in
-            request?.endAccessingResources()
-        }
+        resourceRequest?.endAccessingResources()
     }
 }
