@@ -37,12 +37,12 @@ struct SurahsView: View {
 
     @ViewBuilder
     private func HeaderCard() -> some View {
-        let prog = highlights.hifdhProgress(surahs: StaticSurahs.all)
+        let prog = highlights.hifzProgress(surahs: StaticSurahs.all)
         let pct = prog.total == 0 ? 0 : Double(prog.completed) / Double(prog.total)
         ZStack {
             GlassBackground(intensity: 0.18, cornerRadius: 14)
             VStack(alignment: .leading, spacing: 10) {
-                Text("Hifdh Progress").font(.headline)
+                Text("Hifz Progress").font(.headline)
                 GradientProgressBar(progress: pct, height: 12)
                 HStack {
                     Label("Memorized \(prog.completed)", systemImage: "checkmark.seal.fill")

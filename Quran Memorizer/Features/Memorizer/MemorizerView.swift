@@ -2,12 +2,16 @@ import SwiftUI
 
 struct MemorizerView: View {
     @EnvironmentObject private var nav: AppNav
+    @EnvironmentObject private var theme: ThemeManager
     @EnvironmentObject private var prefs: AppPrefsStore
     @EnvironmentObject private var mem: MemorizerState
     @EnvironmentObject private var highlights: HighlightStore
     @EnvironmentObject private var memorizedAyahs: MemorizedAyahStore
     @State private var showPlayerControls = false
     @State private var textLanguage: SurahTextLanguage = .both
+    @State private var showFullscreen = false
+    @State private var fullScreenSurah: Surah? = nil
+    @State private var fullScreenText: SurahTextContent? = nil
 
     var body: some View {
         NavigationStack {
@@ -42,6 +46,11 @@ struct MemorizerView: View {
                     showPlayerControls = false
                     textLanguage = .both
                 }
+            }
+        }
+        .fullScreenCover(isPresented: $showFullscreen) {
+            if let surah = fullScreenSurah, let text = fullScreenText {
+                fullScreenReader(for: surah, text: text)
             }
         }
     }
@@ -224,10 +233,39 @@ struct MemorizerView: View {
     private func surahTextSection(_ text: SurahTextContent, for surah: Surah) -> some View {
         let totalAyahs = surah.ayahCount > 0 ? surah.ayahCount : text.arabic.count
         let indices = ayahIndices(for: text, surah: surah)
-        return VStack(alignment: .leading, spacing: 16) {
-            Text("Surah text")
-                .font(.headline)
+        return VStack(alignment: .leading, spacing: 18) {
+            HStack(alignment: .center) {
+                Text("Surah text")
+                    .font(.headline)
+                    .foregroundStyle(theme.readingTheme.primaryTextColor)
+                Spacer()
+                Button {
+                    fullScreenSurah = surah
+                    fullScreenText = text
+                    showFullscreen = true
+                } label: {
+                    Label("Fullscreen", systemImage: "arrow.up.left.and.arrow.down.right")
+                }
+                .buttonStyle(.bordered)
+                .controlSize(.small)
+            }
 
+            surahTextBody(text, surah: surah, totalAyahs: totalAyahs, indices: indices)
+        }
+        .padding(18)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .fill(theme.readingTheme.backgroundColor)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .stroke(theme.readingTheme.borderColor.opacity(0.4), lineWidth: 1)
+        )
+    }
+
+    private func surahTextBody(_ text: SurahTextContent, surah: Surah, totalAyahs: Int, indices: [Int]) -> some View {
+        VStack(alignment: .leading, spacing: 16) {
             Picker("Language", selection: $textLanguage) {
                 ForEach(SurahTextLanguage.allCases) { option in
                     Text(option.title).tag(option)
@@ -235,25 +273,72 @@ struct MemorizerView: View {
             }
             .pickerStyle(.segmented)
 
-            Text("Double-click an ayah to toggle its memorized status.")
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Reading background")
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(theme.readingTheme.secondaryTextColor)
+                readingBackgroundSelector
+            }
+
+            Text("Double-tap an ayah to toggle its memorized status.")
                 .font(.footnote)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(theme.readingTheme.secondaryTextColor)
 
             if textLanguage == .memorized && indices.isEmpty {
                 Label("No ayahs memorized yet.", systemImage: "bookmark.slash")
                     .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.readingTheme.secondaryTextColor)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(14)
                     .background(
-                        RoundedRectangle(cornerRadius: 14)
-                            .fill(Color.secondary.opacity(0.08))
+                        RoundedRectangle(cornerRadius: 14, style: .continuous)
+                            .fill(theme.readingTheme.cardColor)
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 14, style: .continuous)
+                            .stroke(theme.readingTheme.borderColor.opacity(0.35), lineWidth: 0.8)
                     )
             } else {
                 VStack(alignment: .leading, spacing: 12) {
                     ForEach(indices, id: \.self) { index in
                         ayahCard(for: index, text: text, surah: surah, totalAyahs: totalAyahs)
                     }
+                }
+            }
+        }
+    }
+
+    private var readingBackgroundSelector: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 12) {
+                ForEach(ReadingTheme.allCases, id: \.self) { option in
+                    Button {
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            theme.readingTheme = option
+                        }
+                    } label: {
+                        VStack(spacing: 6) {
+                            Circle()
+                                .fill(option.swatchColor)
+                                .frame(width: 32, height: 32)
+                                .overlay(
+                                    Circle()
+                                        .stroke(Color.accentColor.opacity(theme.readingTheme == option ? 0.9 : 0.4), lineWidth: theme.readingTheme == option ? 3 : 1)
+                                )
+                            Text(option.displayName)
+                                .font(.caption2)
+                                .foregroundStyle(theme.readingTheme == option ? theme.readingTheme.primaryTextColor : theme.readingTheme.secondaryTextColor)
+                                .frame(maxWidth: .infinity)
+                        }
+                        .padding(.vertical, 6)
+                        .padding(.horizontal, 10)
+                        .frame(minWidth: 72)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                .fill(theme.readingTheme == option ? Color.accentColor.opacity(0.12) : Color.clear)
+                        )
+                    }
+                    .buttonStyle(.plain)
                 }
             }
         }
@@ -279,41 +364,43 @@ struct MemorizerView: View {
         let showArabic = textLanguage != .english
         let showEnglish = textLanguage != .arabic || textLanguage == .memorized
 
-        return VStack(alignment: .leading, spacing: 8) {
+        return VStack(alignment: .leading, spacing: 10) {
             HStack {
                 Text("Ayah \(ayahNumber)")
                     .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(theme.readingTheme.primaryTextColor)
                 Spacer()
                 if isMemorized {
-                    Label("Memorized", systemImage: "checkmark.seal.fill")
-                        .font(.caption)
-                        .labelStyle(.titleAndIcon)
-                        .foregroundStyle(.green)
+                    Image(systemName: "checkmark.seal.fill")
+                        .font(.title3)
+                        .foregroundStyle(Color.accentColor)
                 }
             }
 
             if showArabic {
                 Text(verse)
-                    .font(.title3)
+                    .font(.custom("KFGQPC Uthmanic Script HAFS", size: 28))
+                    .foregroundStyle(theme.readingTheme.primaryTextColor)
                     .frame(maxWidth: .infinity, alignment: .trailing)
                     .multilineTextAlignment(.trailing)
+                    .lineSpacing(6)
             }
 
             if showEnglish, index < text.english.count {
                 Text(text.english[index])
                     .font(.body)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(theme.readingTheme.secondaryTextColor)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(14)
+        .padding(16)
         .background(
-            RoundedRectangle(cornerRadius: 14)
-                .fill(isMemorized ? Color.accentColor.opacity(0.18) : Color.secondary.opacity(0.08))
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .fill(theme.readingTheme.cardColor)
         )
         .overlay(
-            RoundedRectangle(cornerRadius: 14)
-                .stroke(isMemorized ? Color.accentColor.opacity(0.35) : Color.clear, lineWidth: 1)
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .stroke(theme.readingTheme.borderColor.opacity(0.35), lineWidth: 0.8)
         )
         .onTapGesture(count: 2) {
             toggleMemorizedAyah(at: index, totalAyahs: totalAyahs, in: surah)
@@ -337,6 +424,28 @@ struct MemorizerView: View {
 
         withAnimation(.spring(duration: 0.25)) {
             highlights.setState(newState, for: surah.id)
+        }
+    }
+
+    @ViewBuilder
+    private func fullScreenReader(for surah: Surah, text: SurahTextContent) -> some View {
+        let totalAyahs = surah.ayahCount > 0 ? surah.ayahCount : text.arabic.count
+        let indices = ayahIndices(for: text, surah: surah)
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 20) {
+                    surahTextBody(text, surah: surah, totalAyahs: totalAyahs, indices: indices)
+                }
+                .padding(.horizontal, 20)
+                .padding(.vertical, 24)
+            }
+            .background(theme.readingTheme.backgroundColor.ignoresSafeArea())
+            .navigationTitle(surah.englishName)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Done") { showFullscreen = false }
+                }
+            }
         }
     }
 
