@@ -22,6 +22,14 @@ enum Reciter: String, CaseIterable, Codable {
     /// Currently Surah Al-Fātiḥah (1) is provided so users can try the memorizer player.
     func sampleRecitation(for surah: Surah) -> URL? {
         guard surah.id == 1 else { return nil }
+        if let localUrl = Bundle.main.url(
+            forResource: "001",
+            withExtension: "mp3",
+            subdirectory: "Quranvn/Resources"
+        ) {
+            return localUrl
+        }
+
         switch self {
         case .saadAlGhamdi:
             return URL(string: "https://download.quranicaudio.com/quran/saad_al_ghamdi/001.mp3")
