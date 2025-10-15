@@ -9,6 +9,7 @@ final class AppPrefsStore: ObservableObject {
     }
 }
 
+@MainActor
 final class HighlightStore: ObservableObject {
     private let key = "surahHighlights.v1"
     @Published private(set) var highlights: [Int: HighlightState] = [:]
@@ -17,7 +18,13 @@ final class HighlightStore: ObservableObject {
     func state(for surahId: Int) -> HighlightState { highlights[surahId] ?? .none }
 
     func setState(_ state: HighlightState, for surahId: Int) {
-        highlights[surahId] = state
+        var copy = highlights
+        if state == .none {
+            copy.removeValue(forKey: surahId)
+        } else {
+            copy[surahId] = state
+        }
+        highlights = copy
         save()
     }
 
@@ -47,6 +54,7 @@ final class HighlightStore: ObservableObject {
     }
 }
 
+@MainActor
 final class MemorizedAyahStore: ObservableObject {
     private let key = "memorizedAyahs.v1"
     @Published private(set) var memorized: [Int: Set<Int>] = [:]
@@ -65,18 +73,20 @@ final class MemorizedAyahStore: ObservableObject {
     }
 
     func setMemorized(_ isMemorized: Bool, surahId: Int, ayah: Int) {
-        var set = memorized[surahId] ?? []
+        var updated = memorized
+        var set = updated[surahId] ?? []
         if isMemorized {
             set.insert(ayah)
-            memorized[surahId] = set
+            updated[surahId] = set
         } else {
             set.remove(ayah)
             if set.isEmpty {
-                memorized.removeValue(forKey: surahId)
+                updated.removeValue(forKey: surahId)
             } else {
-                memorized[surahId] = set
+                updated[surahId] = set
             }
         }
+        memorized = updated
         save()
     }
 
