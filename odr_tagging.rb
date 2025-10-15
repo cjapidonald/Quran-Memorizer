@@ -9,10 +9,10 @@
 #
 # What it does:
 #   • Ensures ENABLE_ON_DEMAND_RESOURCES = YES on the chosen target
-#   • Scans your project for audio files under your chosen folders (e.g. "Quranvn/Mishary"
-#     and "Quranvn/Saad") and assigns a tag per file:
-#       Quranvn/Mishary/001.mp3  -> tag "mishary-001"
-#       Quranvn/Saad/114.mp3     -> tag "saad-114"
+#   • Scans your project for audio files under your chosen folders (e.g. "Quran/Resources/Mishary01"
+#     and "Quran/Resources/Saad01") and assigns a tag per file:
+#       Quran/Resources/Mishary01/m001.mp3  -> tag "mishary-m001"
+#       Quran/Resources/Saad01/001.mp3      -> tag "saad-001"
 #   • If files exist on disk but are not yet in the project, the script can add
 #     them to the Resources build phase automatically (opt-in with --add-missing)
 #
@@ -23,8 +23,8 @@
 #   ruby odr_tagging.rb \
 #     --project "/Users/donaldcjapi/Desktop/Quran Memorizer/Quran Memorizer.xcodeproj" \
 #     --target  "Quran Memorizer" \
-#     --mishary-dir "Quranvn/Mishary" \
-#     --saad-dir    "Quranvn/Saad"
+#     --mishary-dir "Quran/Resources/Mishary01" \
+#     --saad-dir    "Quran/Resources/Saad01"
 #
 require 'optparse'
 require 'pathname'
@@ -38,8 +38,8 @@ end
 options = {
   project: nil,
   target_name: nil,
-  mishary_dir: 'Quranvn/Mishary',
-  saad_dir: 'Quranvn/Saad',
+  mishary_dir: 'Quran/Resources/Mishary01',
+  saad_dir: 'Quran/Resources/Saad01',
   add_missing: false,
   dry_run: false
 }
@@ -164,8 +164,8 @@ reciters.each do |reciter_name, dir|
     next
   end
 
-  # Build group path based on the provided directory (e.g., "Quranvn/Mishary")
-  fragments = group_fragments_for_dir(dir, project_dir, "Linked Audio") # keeps "Quranvn", "Mishary"
+  # Build group path based on the provided directory (e.g., "Quran/Resources/Mishary01")
+  fragments = group_fragments_for_dir(dir, project_dir, "Linked Audio") # keeps "Quran", "Resources", "Mishary01"
   display_group = ensure_group(project, fragments)
 
   Dir.glob(dir_path.join('**/*.{mp3,m4a,wav,aac,mp4}')).sort.each do |abs_file|
@@ -217,4 +217,4 @@ end
 puts "\nNext steps:"
 puts "  • In Xcode, select your app target → Build Settings → ensure 'Enable On Demand Resources' is YES."
 puts "  • Optionally set 'On Demand Resources Initial Install Tags' for any packs you want preinstalled."
-puts "  • Request your audio at runtime with NSBundleResourceRequest(tags: [\"mishary-001\"])."
+puts "  • Request your audio at runtime with NSBundleResourceRequest(tags: [\"mishary-m001\"])."

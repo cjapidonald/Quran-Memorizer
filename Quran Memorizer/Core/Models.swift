@@ -20,7 +20,7 @@ enum Reciter: String, CaseIterable, Codable {
 
     /// Returns a URL to a sample recitation for the given surah if one exists.
     /// All surahs are streamed from QuranicAudio.com for both supported reciters.
-    /// Surah Al-Fātiḥah (1) is additionally bundled at `Quranvn/Resources/001.mp3`
+    /// Surah Al-Fātiḥah (1) is additionally bundled at `Quran/Resources/Saad01/001.mp3`
     /// so playback works offline. Selected early surahs are packaged as
     /// On-Demand Resources so they can be downloaded for offline playback.
     func sampleRecitation(for surah: Surah) -> URL? {
@@ -89,9 +89,9 @@ enum Reciter: String, CaseIterable, Codable {
         guard (1...4).contains(surahId) else { return nil }
         switch self {
         case .saadAlGhamdi:
-            return "Quranvn/Resources/Saad01"
+            return "Quran/Resources/Saad01"
         case .misharyRashid:
-            return "Quranvn/Resources/Mishary01"
+            return "Quran/Resources/Mishary01"
         }
     }
 
@@ -108,14 +108,27 @@ enum Reciter: String, CaseIterable, Codable {
     private static let bundledFatihahSampleUrl: URL? = {
         let bundle = Bundle.main
         let fileManager = FileManager.default
-        let candidates: [URL?] = [
-            bundle.url(
-                forResource: "001",
-                withExtension: "mp3",
-                subdirectory: "Quranvn/Resources"
-            ),
+        let subdirectories = [
+            "Quran/Resources",
+            "Quran/Resources/Saad01",
+            "Quran/Resources/Mishary01"
+        ]
+
+        let resourceNames = ["001", "s001", "m001"]
+
+        let candidates: [URL?] = subdirectories.flatMap { subdirectory in
+            resourceNames.map { name in
+                bundle.url(
+                    forResource: name,
+                    withExtension: "mp3",
+                    subdirectory: subdirectory
+                )
+            }
+        } + [
             bundle.url(forResource: "001", withExtension: "mp3"),
-            bundle.resourceURL?.appendingPathComponent("Quranvn/Resources/001.mp3")
+            bundle.resourceURL?.appendingPathComponent("Quran/Resources/001.mp3"),
+            bundle.resourceURL?.appendingPathComponent("Quran/Resources/Saad01/001.mp3"),
+            bundle.resourceURL?.appendingPathComponent("Quran/Resources/Mishary01/m001.mp3")
         ]
 
         for case let url? in candidates where fileManager.fileExists(atPath: url.path) {
