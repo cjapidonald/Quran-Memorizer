@@ -8,6 +8,8 @@ import AVFAudio
 
 @MainActor
 final class MemorizerState: ObservableObject {
+    static let playbackRateRange: ClosedRange<Double> = 0.5...2.0
+
     enum SampleAvailability: Equatable { case none, loading, ready, failed }
 
     @Published var selectedSurah: Surah? = nil {
@@ -29,6 +31,9 @@ final class MemorizerState: ObservableObject {
     @Published var isLooping: Bool = false
     @Published var duration: TimeInterval = 600
     @Published var currentTime: TimeInterval = 0
+    @Published var playbackRate: Double = 1.0 {
+        didSet { applyPlaybackRateIfNeeded() }
+    }
 
     @Published var loopStart: TimeInterval = 0
     @Published var loopEnd: TimeInterval = 30
@@ -58,6 +63,7 @@ final class MemorizerState: ObservableObject {
 
     func pause() {
         if isPlaying { player?.pause() }
+        player?.rate = 0
         isPlaying = false
         timer?.invalidate()
         timer = nil
@@ -73,6 +79,7 @@ final class MemorizerState: ObservableObject {
             player.seek(to: cmTime, toleranceBefore: .zero, toleranceAfter: .zero) { [weak self] _ in
                 guard let self = self, self.isPlaying else { return }
                 self.player?.play()
+                self.applyPlaybackRateIfNeeded()
             }
         }
     }
@@ -100,7 +107,8 @@ final class MemorizerState: ObservableObject {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [weak self] _ in
             guard let self = self, self.isPlaying else { return }
-            var next = self.currentTime + 0.05
+            let increment = 0.05 * self.playbackRate
+            var next = self.currentTime + increment
             if self.isLooping {
                 if next > self.loopEnd {
                     next = self.loopStart
@@ -291,6 +299,11 @@ final class MemorizerState: ObservableObject {
         }
 
         loadSample(from: url)
+    }
+
+    private func applyPlaybackRateIfNeeded() {
+        guard let player, isPlaying else { return }
+        player.rate = Float(playbackRate)
     }
 
     private func configureAudioSession() {
