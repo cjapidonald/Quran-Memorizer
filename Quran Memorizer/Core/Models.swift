@@ -21,17 +21,16 @@ enum Reciter: String, CaseIterable, Codable {
     /// Returns a URL to a sample recitation for the given surah if one exists.
     /// All surahs are streamed from QuranicAudio.com for both supported reciters.
     /// Surah Al-Fātiḥah (1) is additionally bundled at `Quranvn/Resources/001.mp3`
-    /// so playback works offline.
+    /// so playback works offline. Selected early surahs are packaged as
+    /// On-Demand Resources so they can be downloaded for offline playback.
     func sampleRecitation(for surah: Surah) -> URL? {
         guard (1...114).contains(surah.id) else { return nil }
 
-        let paddedId = String(format: "%03d", surah.id)
-
-        if surah.id == 1, let localUrl = Self.localSampleUrl {
-            return localUrl
+        if let local = localSampleURL(for: surah.id) {
+            return local
         }
 
-        return URL(string: baseUrlString + "\(paddedId).mp3")
+        return streamingSampleURL(for: surah)
     }
 
     private var baseUrlString: String {
@@ -43,7 +42,59 @@ enum Reciter: String, CaseIterable, Codable {
         }
     }
 
-    private static let localSampleUrl: URL? = {
+    func streamingSampleURL(for surah: Surah) -> URL? {
+        guard (1...114).contains(surah.id) else { return nil }
+        let paddedId = String(format: "%03d", surah.id)
+        return URL(string: baseUrlString + "\(paddedId).mp3")
+    }
+
+    func onDemandResourceTag(for surahId: Int) -> String? {
+        guard (1...4).contains(surahId) else { return nil }
+        let padded = String(format: "%03d", surahId)
+        switch self {
+        case .saadAlGhamdi:
+            return "saad-\(padded)"
+        case .misharyRashid:
+            return "mishary-s\(padded)"
+        }
+    }
+
+    private func localSampleURL(for surahId: Int, in bundle: Bundle = .main) -> URL? {
+        if let subdirectory = onDemandSubdirectory(for: surahId) {
+            let padded = String(format: "%03d", surahId)
+            let fileManager = FileManager.default
+            let candidates: [URL?] = [
+                bundle.url(
+                    forResource: padded,
+                    withExtension: "mp3",
+                    subdirectory: subdirectory
+                ),
+                bundle.resourceURL?.appendingPathComponent("\(subdirectory)/\(padded).mp3")
+            ]
+
+            for case let url? in candidates where fileManager.fileExists(atPath: url.path) {
+                return url
+            }
+        }
+
+        if surahId == 1, let url = Self.bundledFatihahSampleUrl {
+            return url
+        }
+
+        return nil
+    }
+
+    private func onDemandSubdirectory(for surahId: Int) -> String? {
+        guard (1...4).contains(surahId) else { return nil }
+        switch self {
+        case .saadAlGhamdi:
+            return "Quranvn/Resources/Saad01"
+        case .misharyRashid:
+            return "Quranvn/Resources/Mishary01"
+        }
+    }
+
+    private static let bundledFatihahSampleUrl: URL? = {
         let bundle = Bundle.main
         let fileManager = FileManager.default
         let candidates: [URL?] = [

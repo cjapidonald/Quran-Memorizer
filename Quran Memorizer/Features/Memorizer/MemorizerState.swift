@@ -1,10 +1,12 @@
 import Foundation
 import Combine
 import AVFoundation
+import class Foundation.NSBundleResourceRequest
 #if canImport(AVFAudio)
 import AVFAudio
 #endif
 
+@MainActor
 final class MemorizerState: ObservableObject {
     enum SampleAvailability: Equatable { case none, loading, ready, failed }
 
@@ -38,6 +40,8 @@ final class MemorizerState: ObservableObject {
     private var timeObserverToken: Any?
     private var playbackFinishedObserver: NSObjectProtocol?
     private var cancellables = Set<AnyCancellable>()
+    private var resourceTask: Task<Void, Never>?
+    private var resourceRequest: NSBundleResourceRequest?
 
     func play() {
         guard !isPlaying else { return }
@@ -114,24 +118,27 @@ final class MemorizerState: ObservableObject {
 
     private func prepareForCurrentSelection() {
         pause()
+        unloadPlayer()
+        resourceTask?.cancel()
+        resourceTask = nil
+        releaseResourceRequest()
+
         guard let surah = selectedSurah else {
             resetForSimulation()
             sampleAvailability = .none
             return
         }
 
-        guard let url = selectedReciter.sampleRecitation(for: surah) else {
-            resetForSimulation()
-            sampleAvailability = surah.id == 1 ? .failed : .none
-            return
-        }
-
         sampleAvailability = .loading
-        loadSample(from: url)
+        let reciter = selectedReciter
+        resourceTask = Task { [weak self] in
+            await self?.fetchSample(for: surah, reciter: reciter)
+        }
     }
 
     private func resetForSimulation() {
         unloadPlayer()
+        releaseResourceRequest()
         duration = 600
         currentTime = 0
         loopStart = 0
@@ -139,8 +146,6 @@ final class MemorizerState: ObservableObject {
     }
 
     private func loadSample(from url: URL) {
-        unloadPlayer()
-
         let item = AVPlayerItem(url: url)
         let player = AVPlayer(playerItem: item)
         self.player = player
@@ -223,6 +228,63 @@ final class MemorizerState: ObservableObject {
         cancellables.removeAll()
     }
 
+    private func releaseResourceRequest() {
+        resourceRequest?.endAccessingResources()
+        resourceRequest = nil
+    }
+
+    private func fetchSample(for surah: Surah, reciter: Reciter) async {
+        defer { resourceTask = nil }
+
+        var acquiredRequest: NSBundleResourceRequest?
+
+        if let tag = reciter.onDemandResourceTag(for: surah.id) {
+            let request = NSBundleResourceRequest(tags: [tag])
+            request.loadingPriority = NSBundleResourceRequestLoadingPriorityUrgent
+            do {
+                try await request.beginAccessing()
+            } catch {
+                request.endAccessingResources()
+                if error is CancellationError {
+                    return
+                }
+                resetForSimulation()
+                sampleAvailability = .failed
+                return
+            }
+
+            if Task.isCancelled {
+                request.endAccessingResources()
+                return
+            }
+
+            acquiredRequest = request
+            resourceRequest = request
+        }
+
+        guard let url = reciter.sampleRecitation(for: surah) else {
+            acquiredRequest?.endAccessingResources()
+            if resourceRequest === acquiredRequest {
+                resourceRequest = nil
+            }
+            resetForSimulation()
+            sampleAvailability = surah.id == 1 ? .failed : .none
+            return
+        }
+
+        if reciter.onDemandResourceTag(for: surah.id) != nil && !url.isFileURL {
+            acquiredRequest?.endAccessingResources()
+            if resourceRequest === acquiredRequest {
+                resourceRequest = nil
+            }
+            resetForSimulation()
+            sampleAvailability = .failed
+            return
+        }
+
+        loadSample(from: url)
+    }
+
     private func configureAudioSession() {
         #if canImport(AVFAudio)
         let session = AVAudioSession.sharedInstance()
@@ -232,6 +294,8 @@ final class MemorizerState: ObservableObject {
     }
 
     deinit {
+        resourceTask?.cancel()
+        releaseResourceRequest()
         unloadPlayer()
     }
 }
