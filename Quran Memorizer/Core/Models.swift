@@ -53,24 +53,25 @@ enum Reciter: String, CaseIterable, Codable {
         let padded = String(format: "%03d", surahId)
         switch self {
         case .saadAlGhamdi:
-            return "saad-\(padded)"
+            return "s\(padded)"
         case .misharyRashid:
-            return "mishary-s\(padded)"
+            return "m\(padded)"
         }
     }
 
     private func localSampleURL(for surahId: Int, in bundle: Bundle = .main) -> URL? {
         if let subdirectory = onDemandSubdirectory(for: surahId) {
-            let padded = String(format: "%03d", surahId)
             let fileManager = FileManager.default
-            let candidates: [URL?] = [
-                bundle.url(
-                    forResource: padded,
-                    withExtension: "mp3",
-                    subdirectory: subdirectory
-                ),
-                bundle.resourceURL?.appendingPathComponent("\(subdirectory)/\(padded).mp3")
-            ]
+            let candidates = onDemandResourceFilenames(for: surahId).flatMap { name -> [URL?] in
+                [
+                    bundle.url(
+                        forResource: name,
+                        withExtension: "mp3",
+                        subdirectory: subdirectory
+                    ),
+                    bundle.resourceURL?.appendingPathComponent("\(subdirectory)/\(name).mp3")
+                ]
+            }
 
             for case let url? in candidates where fileManager.fileExists(atPath: url.path) {
                 return url
@@ -91,6 +92,16 @@ enum Reciter: String, CaseIterable, Codable {
             return "Quranvn/Resources/Saad01"
         case .misharyRashid:
             return "Quranvn/Resources/Mishary01"
+        }
+    }
+
+    private func onDemandResourceFilenames(for surahId: Int) -> [String] {
+        let padded = String(format: "%03d", surahId)
+        switch self {
+        case .saadAlGhamdi:
+            return ["s\(padded)", padded]
+        case .misharyRashid:
+            return ["m\(padded)", padded]
         }
     }
 
