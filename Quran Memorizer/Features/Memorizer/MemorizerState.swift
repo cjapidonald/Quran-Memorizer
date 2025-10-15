@@ -242,7 +242,7 @@ final class MemorizerState: ObservableObject {
             let request = NSBundleResourceRequest(tags: [tag])
             request.loadingPriority = NSBundleResourceRequestLoadingPriorityUrgent
             do {
-                try await request.beginAccessing()
+                try await request.beginAccessingResources()
             } catch {
                 request.endAccessingResources()
                 if error is CancellationError {

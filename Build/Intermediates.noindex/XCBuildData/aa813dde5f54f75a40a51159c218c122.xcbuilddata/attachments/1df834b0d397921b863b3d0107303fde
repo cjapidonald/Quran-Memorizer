@@ -1,0 +1,169 @@
+{
+  "" : {
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Quran Memorizer-primary.dia",
+    "emit-module-dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Quran Memorizer-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Quran Memorizer-primary-emit-module.dia",
+    "pch" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Quran Memorizer-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Quran Memorizer-primary.swiftdeps"
+  },
+  "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/GeneratedAssetSymbols.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/GeneratedAssetSymbols.dia",
+    "index-unit-output-path" : "/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftdeps",
+    "swiftmodule" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/GeneratedAssetSymbols~partial.swiftmodule"
+  },
+  "/Users/donaldcjapi/Desktop/Quran Memorizer/Quran Memorizer/ContentView.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/ContentView.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/ContentView.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/ContentView.dia",
+    "index-unit-output-path" : "/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/ContentView.o",
+    "llvm-bc" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/ContentView.bc",
+    "object" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/ContentView.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/ContentView.swiftdeps",
+    "swiftmodule" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/ContentView~partial.swiftmodule"
+  },
+  "/Users/donaldcjapi/Desktop/Quran Memorizer/Quran Memorizer/Core/Models.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Models.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Models.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Models.dia",
+    "index-unit-output-path" : "/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Models.o",
+    "llvm-bc" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Models.bc",
+    "object" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Models.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Models.swiftdeps",
+    "swiftmodule" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Models~partial.swiftmodule"
+  },
+  "/Users/donaldcjapi/Desktop/Quran Memorizer/Quran Memorizer/Core/StaticSurahs.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/StaticSurahs.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/StaticSurahs.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/StaticSurahs.dia",
+    "index-unit-output-path" : "/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/StaticSurahs.o",
+    "llvm-bc" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/StaticSurahs.bc",
+    "object" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/StaticSurahs.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/StaticSurahs.swiftdeps",
+    "swiftmodule" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/StaticSurahs~partial.swiftmodule"
+  },
+  "/Users/donaldcjapi/Desktop/Quran Memorizer/Quran Memorizer/Core/Stores.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Stores.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Stores.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Stores.dia",
+    "index-unit-output-path" : "/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Stores.o",
+    "llvm-bc" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Stores.bc",
+    "object" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Stores.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Stores.swiftdeps",
+    "swiftmodule" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Stores~partial.swiftmodule"
+  },
+  "/Users/donaldcjapi/Desktop/Quran Memorizer/Quran Memorizer/Core/SurahTexts.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/SurahTexts.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/SurahTexts.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/SurahTexts.dia",
+    "index-unit-output-path" : "/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/SurahTexts.o",
+    "llvm-bc" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/SurahTexts.bc",
+    "object" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/SurahTexts.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/SurahTexts.swiftdeps",
+    "swiftmodule" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/SurahTexts~partial.swiftmodule"
+  },
+  "/Users/donaldcjapi/Desktop/Quran Memorizer/Quran Memorizer/Design/AppTheme.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/AppTheme.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/AppTheme.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/AppTheme.dia",
+    "index-unit-output-path" : "/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/AppTheme.o",
+    "llvm-bc" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/AppTheme.bc",
+    "object" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/AppTheme.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/AppTheme.swiftdeps",
+    "swiftmodule" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/AppTheme~partial.swiftmodule"
+  },
+  "/Users/donaldcjapi/Desktop/Quran Memorizer/Quran Memorizer/Features/Memorizer/ABRangeSlider.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/ABRangeSlider.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/ABRangeSlider.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/ABRangeSlider.dia",
+    "index-unit-output-path" : "/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/ABRangeSlider.o",
+    "llvm-bc" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/ABRangeSlider.bc",
+    "object" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/ABRangeSlider.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/ABRangeSlider.swiftdeps",
+    "swiftmodule" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/ABRangeSlider~partial.swiftmodule"
+  },
+  "/Users/donaldcjapi/Desktop/Quran Memorizer/Quran Memorizer/Features/Memorizer/MemorizerState.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/MemorizerState.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/MemorizerState.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/MemorizerState.dia",
+    "index-unit-output-path" : "/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/MemorizerState.o",
+    "llvm-bc" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/MemorizerState.bc",
+    "object" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/MemorizerState.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/MemorizerState.swiftdeps",
+    "swiftmodule" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/MemorizerState~partial.swiftmodule"
+  },
+  "/Users/donaldcjapi/Desktop/Quran Memorizer/Quran Memorizer/Features/Memorizer/MemorizerView.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/MemorizerView.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/MemorizerView.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/MemorizerView.dia",
+    "index-unit-output-path" : "/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/MemorizerView.o",
+    "llvm-bc" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/MemorizerView.bc",
+    "object" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/MemorizerView.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/MemorizerView.swiftdeps",
+    "swiftmodule" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/MemorizerView~partial.swiftmodule"
+  },
+  "/Users/donaldcjapi/Desktop/Quran Memorizer/Quran Memorizer/Features/Settings/SettingsView.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/SettingsView.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/SettingsView.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/SettingsView.dia",
+    "index-unit-output-path" : "/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/SettingsView.o",
+    "llvm-bc" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/SettingsView.bc",
+    "object" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/SettingsView.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/SettingsView.swiftdeps",
+    "swiftmodule" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/SettingsView~partial.swiftmodule"
+  },
+  "/Users/donaldcjapi/Desktop/Quran Memorizer/Quran Memorizer/Features/Surahs/SurahsView.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/SurahsView.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/SurahsView.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/SurahsView.dia",
+    "index-unit-output-path" : "/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/SurahsView.o",
+    "llvm-bc" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/SurahsView.bc",
+    "object" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/SurahsView.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/SurahsView.swiftdeps",
+    "swiftmodule" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/SurahsView~partial.swiftmodule"
+  },
+  "/Users/donaldcjapi/Desktop/Quran Memorizer/Quran Memorizer/Item.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Item.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Item.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Item.dia",
+    "index-unit-output-path" : "/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Item.o",
+    "llvm-bc" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Item.bc",
+    "object" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Item.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Item.swiftdeps",
+    "swiftmodule" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Item~partial.swiftmodule"
+  },
+  "/Users/donaldcjapi/Desktop/Quran Memorizer/Quran Memorizer/Quran_MemorizerApp.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Quran_MemorizerApp.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Quran_MemorizerApp.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Quran_MemorizerApp.dia",
+    "index-unit-output-path" : "/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Quran_MemorizerApp.o",
+    "llvm-bc" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Quran_MemorizerApp.bc",
+    "object" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Quran_MemorizerApp.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Quran_MemorizerApp.swiftdeps",
+    "swiftmodule" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/Quran_MemorizerApp~partial.swiftmodule"
+  },
+  "/Users/donaldcjapi/Desktop/Quran Memorizer/Quran Memorizer/Shared/AppNav.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/AppNav.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/AppNav.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/AppNav.dia",
+    "index-unit-output-path" : "/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/AppNav.o",
+    "llvm-bc" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/AppNav.bc",
+    "object" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/AppNav.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/AppNav.swiftdeps",
+    "swiftmodule" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/AppNav~partial.swiftmodule"
+  },
+  "/Users/donaldcjapi/Desktop/Quran Memorizer/Quran Memorizer/Shared/RootTabView.swift" : {
+    "const-values" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/RootTabView.swiftconstvalues",
+    "dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/RootTabView.d",
+    "diagnostics" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/RootTabView.dia",
+    "index-unit-output-path" : "/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/RootTabView.o",
+    "llvm-bc" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/RootTabView.bc",
+    "object" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/RootTabView.o",
+    "swift-dependencies" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/RootTabView.swiftdeps",
+    "swiftmodule" : "/Users/donaldcjapi/Desktop/Quran Memorizer/Build/Intermediates.noindex/Quran Memorizer.build/Debug-iphonesimulator/Quran Memorizer.build/Objects-normal/arm64/RootTabView~partial.swiftmodule"
+  }
+}
