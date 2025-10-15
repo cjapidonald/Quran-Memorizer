@@ -43,7 +43,7 @@ final class MemorizerState: ObservableObject {
         guard !isPlaying else { return }
         isPlaying = true
 
-        if let player {
+        if player != nil {
             configureAudioSession()
             seek(to: loopStart)
         } else {
@@ -175,11 +175,28 @@ final class MemorizerState: ObservableObject {
                 guard let self = self else { return }
                 switch status {
                 case .readyToPlay:
-                    let seconds = CMTimeGetSeconds(item.asset.duration)
-                    self.duration = seconds.isFinite ? max(1, seconds) : 600
-                    self.loopStart = 0
-                    self.loopEnd = min(30, self.duration)
-                    self.sampleAvailability = .ready
+                    let asset = item.asset
+                    Task { [weak self] in
+                        guard let self = self else { return }
+                        let durationTime: CMTime
+                        if #available(iOS 16.0, *) {
+                            if let loadedDuration = try? await asset.load(.duration) {
+                                durationTime = loadedDuration
+                            } else {
+                                durationTime = asset.duration
+                            }
+                        } else {
+                            durationTime = asset.duration
+                        }
+
+                        let seconds = CMTimeGetSeconds(durationTime)
+                        await MainActor.run {
+                            self.duration = seconds.isFinite ? max(1, seconds) : 600
+                            self.loopStart = 0
+                            self.loopEnd = min(30, self.duration)
+                            self.sampleAvailability = .ready
+                        }
+                    }
                 case .failed:
                     self.sampleAvailability = .failed
                     self.resetForSimulation()
