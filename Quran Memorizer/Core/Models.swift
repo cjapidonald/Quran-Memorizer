@@ -20,7 +20,7 @@ enum Reciter: String, CaseIterable, Codable {
 
     /// Returns a URL to a sample recitation for the given surah if one exists.
     /// All surahs are streamed from QuranicAudio.com for both supported reciters.
-    /// Surah Al-Fātiḥah (1) is additionally bundled at `Quranvn/Resources/001.mp3`
+    /// Surah Al-Fātiḥah (1) is additionally bundled at `Quran/Resources/001.mp3`
     /// so playback works offline. Selected early surahs are packaged as
     /// On-Demand Resources so they can be downloaded for offline playback.
     func sampleRecitation(for surah: Surah) -> URL? {
@@ -89,9 +89,9 @@ enum Reciter: String, CaseIterable, Codable {
         guard (1...4).contains(surahId) else { return nil }
         switch self {
         case .saadAlGhamdi:
-            return "Quranvn/Resources/Saad01"
+            return "Quran/Resources/Saad01"
         case .misharyRashid:
-            return "Quranvn/Resources/Mishary01"
+            return "Quran/Resources/Mishary01"
         }
     }
 
@@ -112,10 +112,10 @@ enum Reciter: String, CaseIterable, Codable {
             bundle.url(
                 forResource: "001",
                 withExtension: "mp3",
-                subdirectory: "Quranvn/Resources"
+                subdirectory: "Quran/Resources"
             ),
             bundle.url(forResource: "001", withExtension: "mp3"),
-            bundle.resourceURL?.appendingPathComponent("Quranvn/Resources/001.mp3")
+            bundle.resourceURL?.appendingPathComponent("Quran/Resources/001.mp3")
         ]
 
         for case let url? in candidates where fileManager.fileExists(atPath: url.path) {
