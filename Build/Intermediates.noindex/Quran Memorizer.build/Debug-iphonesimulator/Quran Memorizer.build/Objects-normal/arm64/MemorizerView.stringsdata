@@ -1,0 +1,184 @@
+{
+  "source": "/Users/donaldcjapi/Desktop/Quran Memorizer/Quran Memorizer/Features/Memorizer/MemorizerView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Memorizer",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 21
+        }
+      },
+      {
+        "comment": "",
+        "key": "Reciter",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 92
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 112
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sample recitation ready – %@",
+        "location": {
+          "startingColumn": 19,
+          "startingLine": 134
+        }
+      },
+      {
+        "comment": "",
+        "key": "Couldn't load the sample audio. Check your connection.",
+        "location": {
+          "startingColumn": 19,
+          "startingLine": 138
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tap play to simulate playback.",
+        "location": {
+          "startingColumn": 19,
+          "startingLine": 142
+        }
+      },
+      {
+        "comment": "",
+        "key": "Loading Surah Al-Fātiḥah sample…",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 129
+        }
+      },
+      {
+        "comment": "",
+        "key": "Audio samples are currently provided for Surah Al-Fātiḥah.",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 182
+        }
+      },
+      {
+        "comment": "",
+        "key": "Hide player",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 162
+        }
+      },
+      {
+        "comment": "",
+        "key": "Show player",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 162
+        }
+      },
+      {
+        "comment": "",
+        "key": "Set A",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 230
+        }
+      },
+      {
+        "comment": "",
+        "key": "Set B",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 234
+        }
+      },
+      {
+        "comment": "",
+        "key": "Loop",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 240
+        }
+      },
+      {
+        "comment": "",
+        "key": "Surah text",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 261
+        }
+      },
+      {
+        "comment": "",
+        "key": "Fullscreen",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 271
+        }
+      },
+      {
+        "comment": "",
+        "key": "Double-tap an ayah to toggle its memorized status.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 307
+        }
+      },
+      {
+        "comment": "",
+        "key": "Language",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 293
+        }
+      },
+      {
+        "comment": "",
+        "key": "No ayahs memorized yet.",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 312
+        }
+      },
+      {
+        "comment": "",
+        "key": "Reading background",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 301
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 406
+        }
+      },
+      {
+        "comment": "",
+        "key": "Done",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 494
+        }
+      },
+      {
+        "comment": "",
+        "key": "Choose a surah from the Surahs tab.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 511
+        }
+      }
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,2 @@
+Target dependency graph (1 target)
+Target 'Quran Memorizer' in project 'Quran Memorizer' (no dependencies)

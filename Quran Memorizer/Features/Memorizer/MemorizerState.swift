@@ -121,7 +121,9 @@ final class MemorizerState: ObservableObject {
         unloadPlayer()
         resourceTask?.cancel()
         resourceTask = nil
-        releaseResourceRequest()
+        Task { @MainActor in
+            self.releaseResourceRequest()
+        }
 
         guard let surah = selectedSurah else {
             resetForSimulation()
@@ -138,7 +140,9 @@ final class MemorizerState: ObservableObject {
 
     private func resetForSimulation() {
         unloadPlayer()
-        releaseResourceRequest()
+        Task { @MainActor in
+            self.releaseResourceRequest()
+        }
         duration = 600
         currentTime = 0
         loopStart = 0
@@ -295,7 +299,8 @@ final class MemorizerState: ObservableObject {
 
     deinit {
         resourceTask?.cancel()
-        releaseResourceRequest()
-        unloadPlayer()
+        Task { @MainActor in
+            self.releaseResourceRequest()
+        }
     }
 }
