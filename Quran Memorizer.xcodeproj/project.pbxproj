@@ -17,9 +17,8 @@
 				Quran/Resources/Mishary01/m001.mp3 = (m001, );
 				Quran/Resources/Mishary01/m002.mp3 = (m002, );
 				Quran/Resources/Mishary01/m003.mp3 = (m003, );
-				Quran/Resources/Mishary01/m004.mp3 = (m004, );
 				Quran/Resources/Saad01/001.mp3 = (s001, );
-				Quran/Resources/Saad01/002.mp3 = (a002, );
+				Quran/Resources/Saad01/002.mp3 = (s002, );
 				Quran/Resources/Saad01/003.mp3 = (s003, );
 			};
 			membershipExceptions = (
@@ -106,6 +105,7 @@
 					m003,
 					m004,
 					s001,
+					s002,
 					s003,
 				);
 				LastSwiftUpdateCheck = 2600;
