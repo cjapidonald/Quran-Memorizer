@@ -19,20 +19,27 @@ enum Reciter: String, CaseIterable, Codable {
     case misharyRashid = "Mishary Rashid Alafasy"
 
     /// Returns a URL to a sample recitation for the given surah if one exists.
-    /// Currently Surah Al-Fātiḥah (1) is provided so users can try the memorizer player.
-    /// The clip is bundled in the app at `Quranvn/Resources/001.mp3` so playback works offline.
+    /// All surahs are streamed from QuranicAudio.com for both supported reciters.
+    /// Surah Al-Fātiḥah (1) is additionally bundled at `Quranvn/Resources/001.mp3`
+    /// so playback works offline.
     func sampleRecitation(for surah: Surah) -> URL? {
-        guard surah.id == 1 else { return nil }
+        guard (1...114).contains(surah.id) else { return nil }
 
-        if let localUrl = Self.localSampleUrl {
+        let paddedId = String(format: "%03d", surah.id)
+
+        if surah.id == 1, let localUrl = Self.localSampleUrl {
             return localUrl
         }
 
+        return URL(string: baseUrlString + "\(paddedId).mp3")
+    }
+
+    private var baseUrlString: String {
         switch self {
         case .saadAlGhamdi:
-            return URL(string: "https://download.quranicaudio.com/quran/saad_al_ghamdi/001.mp3")
+            return "https://download.quranicaudio.com/quran/saad_al_ghamdi/"
         case .misharyRashid:
-            return URL(string: "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/001.mp3")
+            return "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/"
         }
     }
 
