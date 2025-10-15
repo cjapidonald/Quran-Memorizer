@@ -41,19 +41,15 @@ final class MemorizerState: ObservableObject {
 
     func play() {
         guard !isPlaying else { return }
+        isPlaying = true
+
         if let player {
             configureAudioSession()
-            if currentTime < loopStart || currentTime >= loopEnd {
-                seek(to: loopStart)
-            }
-            player.play()
+            seek(to: loopStart)
         } else {
-            if currentTime < loopStart || currentTime >= loopEnd {
-                seek(to: loopStart)
-            }
+            seek(to: loopStart)
             startTimer()
         }
-        isPlaying = true
     }
 
     func pause() {
