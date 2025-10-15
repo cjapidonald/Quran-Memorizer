@@ -13,37 +13,19 @@ struct SettingsView: View {
         NavigationStack {
             Form {
                 Section("Appearance") {
-                    VStack(alignment: .leading, spacing: 12) {
-                        Text("Theme")
-                            .font(.footnote.weight(.semibold))
-                            .foregroundStyle(.secondary)
-                        LazyVGrid(columns: optionColumns, spacing: 12) {
-                            ForEach(ThemeStyle.allCases, id: \.self) { style in
-                                Button {
-                                    theme.themeStyle = style
-                                } label: {
-                                    selectionButton(title: style.displayName, isSelected: theme.themeStyle == style)
-                                }
-                                .buttonStyle(.plain)
-                            }
+                    Toggle(isOn: Binding(
+                        get: { theme.themeStyle == .light },
+                        set: { theme.themeStyle = $0 ? .light : .dark }
+                    )) {
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text("Light mode")
+                                .font(.footnote.weight(.semibold))
+                            Text("Switch between the dark (default) and white interface.")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
                         }
                     }
-
-                    VStack(alignment: .leading, spacing: 12) {
-                        Text("Reading theme")
-                            .font(.footnote.weight(.semibold))
-                            .foregroundStyle(.secondary)
-                        LazyVGrid(columns: optionColumns, spacing: 12) {
-                            ForEach(ReadingTheme.allCases, id: \.self) { option in
-                                Button {
-                                    theme.readingTheme = option
-                                } label: {
-                                    selectionButton(title: option.displayName, isSelected: theme.readingTheme == option, swatch: option.swatchColor)
-                                }
-                                .buttonStyle(.plain)
-                            }
-                        }
-                    }
+                    .toggleStyle(SwitchToggleStyle(tint: .accentColor))
 
                     HStack {
                         Text("Glass intensity")

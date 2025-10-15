@@ -7,6 +7,7 @@ struct MemorizerView: View {
     @EnvironmentObject private var mem: MemorizerState
     @EnvironmentObject private var highlights: HighlightStore
     @EnvironmentObject private var memorizedAyahs: MemorizedAyahStore
+    @Environment(\.colorScheme) private var colorScheme
     @State private var showPlayerControls = false
     @State private var textLanguage: SurahTextLanguage = .both
     @State private var showFullscreen = false
@@ -37,6 +38,7 @@ struct MemorizerView: View {
                     showPlayerControls = false
                     textLanguage = .both
                 }
+                ensureValidReadingTheme()
             }
             .onChange(of: prefs.defaultReciter) { _, newValue in
                 mem.selectedReciter = newValue
@@ -46,6 +48,12 @@ struct MemorizerView: View {
                     showPlayerControls = false
                     textLanguage = .both
                 }
+            }
+            .onChange(of: theme.themeStyle) { _, _ in
+                ensureValidReadingTheme()
+            }
+            .onChange(of: colorScheme) { _, _ in
+                ensureValidReadingTheme()
             }
         }
         .fullScreenCover(isPresented: $showFullscreen) {
@@ -82,6 +90,16 @@ struct MemorizerView: View {
         } label: {
             Label(mem.selectedReciter.rawValue, systemImage: "person.wave.2")
         }
+    }
+
+    private var availableReadingThemes: [ReadingTheme] {
+        ReadingTheme.availableThemes(for: colorScheme)
+    }
+
+    private var readingPalette: ReadingThemePalette {
+        theme.readingTheme.palette(for: colorScheme)
+            ?? ReadingTheme.defaultTheme(for: colorScheme).palette(for: colorScheme)
+            ?? ReadingTheme.standard.palette(for: .light)!
     }
 
     private func header(for s: Surah) -> some View {
@@ -237,7 +255,7 @@ struct MemorizerView: View {
             HStack(alignment: .center) {
                 Text("Surah text")
                     .font(.headline)
-                    .foregroundStyle(theme.readingTheme.primaryTextColor)
+                    .foregroundStyle(readingPalette.primaryTextColor)
                 Spacer()
                 Button {
                     fullScreenSurah = surah
@@ -256,11 +274,11 @@ struct MemorizerView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(
             RoundedRectangle(cornerRadius: 18, style: .continuous)
-                .fill(theme.readingTheme.backgroundColor)
+                .fill(readingPalette.backgroundGradient)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 18, style: .continuous)
-                .stroke(theme.readingTheme.borderColor.opacity(0.4), lineWidth: 1)
+                .stroke(readingPalette.borderColor.opacity(0.4), lineWidth: 1)
         )
     }
 
@@ -276,27 +294,27 @@ struct MemorizerView: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text("Reading background")
                     .font(.subheadline.weight(.semibold))
-                    .foregroundStyle(theme.readingTheme.secondaryTextColor)
+                    .foregroundStyle(readingPalette.secondaryTextColor)
                 readingBackgroundSelector
             }
 
             Text("Double-tap an ayah to toggle its memorized status.")
                 .font(.footnote)
-                .foregroundStyle(theme.readingTheme.secondaryTextColor)
+                .foregroundStyle(readingPalette.secondaryTextColor)
 
             if textLanguage == .memorized && indices.isEmpty {
                 Label("No ayahs memorized yet.", systemImage: "bookmark.slash")
                     .font(.footnote)
-                    .foregroundStyle(theme.readingTheme.secondaryTextColor)
+                    .foregroundStyle(readingPalette.secondaryTextColor)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(14)
                     .background(
                         RoundedRectangle(cornerRadius: 14, style: .continuous)
-                            .fill(theme.readingTheme.cardColor)
+                            .fill(readingPalette.cardGradient)
                     )
                     .overlay(
                         RoundedRectangle(cornerRadius: 14, style: .continuous)
-                            .stroke(theme.readingTheme.borderColor.opacity(0.35), lineWidth: 0.8)
+                            .stroke(readingPalette.borderColor.opacity(0.35), lineWidth: 0.8)
                     )
             } else {
                 VStack(alignment: .leading, spacing: 12) {
@@ -311,7 +329,8 @@ struct MemorizerView: View {
     private var readingBackgroundSelector: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 12) {
-                ForEach(ReadingTheme.allCases, id: \.self) { option in
+                ForEach(availableReadingThemes, id: \.self) { option in
+                    let palette = option.palette(for: colorScheme)!
                     Button {
                         withAnimation(.easeInOut(duration: 0.2)) {
                             theme.readingTheme = option
@@ -319,7 +338,7 @@ struct MemorizerView: View {
                     } label: {
                         VStack(spacing: 6) {
                             Circle()
-                                .fill(option.swatchColor)
+                                .fill(palette.swatchGradient)
                                 .frame(width: 32, height: 32)
                                 .overlay(
                                     Circle()
@@ -327,7 +346,7 @@ struct MemorizerView: View {
                                 )
                             Text(option.displayName)
                                 .font(.caption2)
-                                .foregroundStyle(theme.readingTheme == option ? theme.readingTheme.primaryTextColor : theme.readingTheme.secondaryTextColor)
+                                .foregroundStyle(theme.readingTheme == option ? palette.primaryTextColor : palette.secondaryTextColor)
                                 .frame(maxWidth: .infinity)
                         }
                         .padding(.vertical, 6)
@@ -340,6 +359,19 @@ struct MemorizerView: View {
                     }
                     .buttonStyle(.plain)
                 }
+            }
+        }
+    }
+
+    private func ensureValidReadingTheme() {
+        let available = availableReadingThemes
+        guard !available.isEmpty else { return }
+        if !available.contains(theme.readingTheme) {
+            let fallback = ReadingTheme.defaultTheme(for: colorScheme)
+            if available.contains(fallback) {
+                theme.readingTheme = fallback
+            } else if let first = available.first {
+                theme.readingTheme = first
             }
         }
     }
@@ -368,7 +400,7 @@ struct MemorizerView: View {
             HStack {
                 Text("Ayah \(ayahNumber)")
                     .font(.subheadline.weight(.semibold))
-                    .foregroundStyle(theme.readingTheme.primaryTextColor)
+                    .foregroundStyle(readingPalette.primaryTextColor)
                 Spacer()
                 if isMemorized {
                     Image(systemName: "checkmark.seal.fill")
@@ -380,7 +412,7 @@ struct MemorizerView: View {
             if showArabic {
                 Text(verse)
                     .font(.custom("KFGQPC Uthmanic Script HAFS", size: 28))
-                    .foregroundStyle(theme.readingTheme.primaryTextColor)
+                    .foregroundStyle(readingPalette.primaryTextColor)
                     .frame(maxWidth: .infinity, alignment: .trailing)
                     .multilineTextAlignment(.trailing)
                     .lineSpacing(6)
@@ -389,18 +421,18 @@ struct MemorizerView: View {
             if showEnglish, index < text.english.count {
                 Text(text.english[index])
                     .font(.body)
-                    .foregroundStyle(theme.readingTheme.secondaryTextColor)
+                    .foregroundStyle(readingPalette.secondaryTextColor)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(16)
         .background(
             RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .fill(theme.readingTheme.cardColor)
+                .fill(readingPalette.cardGradient)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .stroke(theme.readingTheme.borderColor.opacity(0.35), lineWidth: 0.8)
+                .stroke(readingPalette.borderColor.opacity(0.35), lineWidth: 0.8)
         )
         .onTapGesture(count: 2) {
             toggleMemorizedAyah(at: index, totalAyahs: totalAyahs, in: surah)
@@ -439,7 +471,7 @@ struct MemorizerView: View {
                 .padding(.horizontal, 20)
                 .padding(.vertical, 24)
             }
-            .background(theme.readingTheme.backgroundColor.ignoresSafeArea())
+            .background(readingPalette.backgroundGradient.ignoresSafeArea())
             .navigationTitle(surah.englishName)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
