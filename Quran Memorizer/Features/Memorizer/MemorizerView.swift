@@ -119,30 +119,46 @@ struct MemorizerView: View {
     }
 
     @ViewBuilder
-    private func sampleStatus(for status: MemorizerState.SampleAvailability) -> some View {
-        switch status {
+    private func sampleStatus(for surah: Surah) -> some View {
+        switch mem.sampleAvailability {
         case .loading:
             HStack(spacing: 6) {
                 ProgressView()
                     .progressViewStyle(.circular)
                     .scaleEffect(0.7, anchor: .center)
-                Text("Loading Surah Al-Fātiḥah sample…")
+                Text("Downloading \(surah.englishName) audio…")
             }
             .font(.footnote)
             .foregroundStyle(.secondary)
         case .ready:
-            Label("Sample recitation ready – \(mem.selectedReciter.rawValue)", systemImage: "waveform")
+            Label("Offline audio ready – \(mem.selectedReciter.rawValue)", systemImage: "waveform")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
         case .failed:
-            Label("Couldn't load the sample audio. Check your connection.", systemImage: "exclamationmark.triangle")
+            Label("Couldn't download the audio. Check your connection.", systemImage: "exclamationmark.triangle")
                 .font(.footnote)
                 .foregroundStyle(.red)
         case .none:
-            Label("Tap play to simulate playback.", systemImage: "play.circle")
+            Label("Tap Download to save this recitation for offline use.", systemImage: "arrow.down.circle")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
         }
+    }
+
+    private func downloadButton(for surah: Surah) -> some View {
+        Button {
+            mem.downloadCurrentSample()
+        } label: {
+            Label(
+                mem.sampleAvailability == .ready
+                    ? "Redownload \(surah.englishName)"
+                    : "Download \(surah.englishName)",
+                systemImage: "arrow.down.circle"
+            )
+        }
+        .buttonStyle(.borderedProminent)
+        .controlSize(.small)
+        .disabled(mem.sampleAvailability == .loading)
     }
 
     @ViewBuilder
@@ -175,11 +191,15 @@ struct MemorizerView: View {
             .buttonStyle(.plain)
 
             if showPlayerControls {
-                if surah.id == 1 {
-                    sampleStatus(for: mem.sampleAvailability)
-                        .transition(.opacity.combined(with: .move(edge: .top)))
+                if mem.selectedReciter.onDemandResourceTag(for: surah.id) != nil {
+                    VStack(alignment: .leading, spacing: 8) {
+                        downloadButton(for: surah)
+                        sampleStatus(for: surah)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .transition(.opacity.combined(with: .move(edge: .top)))
                 } else {
-                    Label("Audio samples are currently provided for Surah Al-Fātiḥah.", systemImage: "info.circle")
+                    Label("Offline downloads are currently available for the first few surahs.", systemImage: "info.circle")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                         .transition(.opacity)
