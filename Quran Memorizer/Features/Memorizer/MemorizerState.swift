@@ -77,9 +77,11 @@ final class MemorizerState: ObservableObject {
         if let player {
             let cmTime = CMTime(seconds: clamped, preferredTimescale: 600)
             player.seek(to: cmTime, toleranceBefore: .zero, toleranceAfter: .zero) { [weak self] _ in
-                guard let self = self, self.isPlaying else { return }
-                self.player?.play()
-                self.applyPlaybackRateIfNeeded()
+                Task { @MainActor [weak self] in
+                    guard let self, self.isPlaying else { return }
+                    self.player?.play()
+                    self.applyPlaybackRateIfNeeded()
+                }
             }
         }
     }
@@ -106,24 +108,26 @@ final class MemorizerState: ObservableObject {
     private func startTimer() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [weak self] _ in
-            guard let self = self, self.isPlaying else { return }
-            let increment = 0.05 * self.playbackRate
-            var next = self.currentTime + increment
-            if self.isLooping {
-                if next > self.loopEnd {
-                    next = self.loopStart
+            Task { @MainActor [weak self] in
+                guard let self, self.isPlaying else { return }
+                let increment = 0.05 * self.playbackRate
+                var next = self.currentTime + increment
+                if self.isLooping {
+                    if next > self.loopEnd {
+                        next = self.loopStart
+                    }
+                } else if next >= self.loopEnd {
+                    next = self.loopEnd
+                    self.pause()
+                    self.currentTime = next
+                    return
                 }
-            } else if next >= self.loopEnd {
-                next = self.loopEnd
-                self.pause()
+                if next >= self.duration {
+                    next = self.isLooping ? self.loopStart : self.duration
+                    if !self.isLooping { self.pause() }
+                }
                 self.currentTime = next
-                return
             }
-            if next >= self.duration {
-                next = self.isLooping ? self.loopStart : self.duration
-                if !self.isLooping { self.pause() }
-            }
-            self.currentTime = next
         }
         RunLoop.main.add(timer!, forMode: .common)
     }
@@ -133,9 +137,7 @@ final class MemorizerState: ObservableObject {
         unloadPlayer()
         resourceTask?.cancel()
         resourceTask = nil
-        Task { @MainActor in
-            self.releaseResourceRequest()
-        }
+        releaseResourceRequest()
 
         guard let surah = selectedSurah else {
             resetForSimulation()
@@ -152,9 +154,7 @@ final class MemorizerState: ObservableObject {
 
     private func resetForSimulation() {
         unloadPlayer()
-        Task { @MainActor in
-            self.releaseResourceRequest()
-        }
+        releaseResourceRequest()
         duration = 600
         currentTime = 0
         loopStart = 0
@@ -168,61 +168,67 @@ final class MemorizerState: ObservableObject {
         currentTime = 0
 
         timeObserverToken = player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.2, preferredTimescale: 600), queue: .main) { [weak self] time in
-            guard let self = self else { return }
-            self.currentTime = time.seconds
-            if self.currentTime >= self.loopEnd {
-                if self.isLooping {
-                    self.seek(to: self.loopStart)
-                } else {
-                    self.pause()
-                    self.seek(to: self.loopEnd)
+            Task { @MainActor [weak self] in
+                guard let self else { return }
+                self.currentTime = time.seconds
+                if self.currentTime >= self.loopEnd {
+                    if self.isLooping {
+                        self.seek(to: self.loopStart)
+                    } else {
+                        self.pause()
+                        self.seek(to: self.loopEnd)
+                    }
                 }
             }
         }
 
         playbackFinishedObserver = NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: item, queue: .main) { [weak self] _ in
-            guard let self = self else { return }
-            if self.isLooping {
-                self.seek(to: self.loopStart)
-                if self.isPlaying { self.player?.play() }
-            } else {
-                self.pause()
+            Task { @MainActor [weak self] in
+                guard let self else { return }
+                if self.isLooping {
+                    self.seek(to: self.loopStart)
+                    if self.isPlaying { self.player?.play() }
+                } else {
+                    self.pause()
+                }
             }
         }
 
         item.publisher(for: \.status)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] status in
-                guard let self = self else { return }
-                switch status {
-                case .readyToPlay:
-                    let asset = item.asset
-                    Task { [weak self] in
-                        guard let self = self else { return }
-                        let durationTime: CMTime
-                        if #available(iOS 16.0, *) {
-                            if let loadedDuration = try? await asset.load(.duration) {
-                                durationTime = loadedDuration
+                Task { @MainActor [weak self] in
+                    guard let self else { return }
+                    switch status {
+                    case .readyToPlay:
+                        let asset = item.asset
+                        Task { [weak self] in
+                            guard let self = self else { return }
+                            let durationTime: CMTime
+                            if #available(iOS 16.0, *) {
+                                if let loadedDuration = try? await asset.load(.duration) {
+                                    durationTime = loadedDuration
+                                } else {
+                                    durationTime = asset.duration
+                                }
                             } else {
                                 durationTime = asset.duration
                             }
-                        } else {
-                            durationTime = asset.duration
-                        }
 
-                        let seconds = CMTimeGetSeconds(durationTime)
-                        await MainActor.run {
-                            self.duration = seconds.isFinite ? max(1, seconds) : 600
-                            self.loopStart = 0
-                            self.loopEnd = min(30, self.duration)
-                            self.sampleAvailability = .ready
+                            let seconds = CMTimeGetSeconds(durationTime)
+                            await MainActor.run {
+                                self.duration = seconds.isFinite ? max(1, seconds) : 600
+                                self.loopStart = 0
+                                self.loopEnd = min(30, self.duration)
+                                self.sampleAvailability = .ready
+                            }
                         }
+                    case .failed:
+                        self.sampleAvailability = .failed
+                        self.resetForSimulation()
+                    default:
+                        break
                     }
-                case .failed:
-                    self.sampleAvailability = .failed
-                    self.resetForSimulation()
-                default:
-                    break
                 }
             }
             .store(in: &self.cancellables)
@@ -316,8 +322,9 @@ final class MemorizerState: ObservableObject {
 
     deinit {
         resourceTask?.cancel()
-        Task { @MainActor in
-            self.releaseResourceRequest()
+        let request = resourceRequest
+        Task { @MainActor [request] in
+            request?.endAccessingResources()
         }
     }
 }
