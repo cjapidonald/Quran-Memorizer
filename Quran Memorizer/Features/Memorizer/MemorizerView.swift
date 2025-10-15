@@ -240,6 +240,21 @@ struct MemorizerView: View {
                 })
             }
             .frame(height: 6)
+
+            VStack(alignment: .leading, spacing: 6) {
+                HStack {
+                    Text("Playback speed")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    Text("\(mem.playbackRate, specifier: "%.2f")×")
+                        .font(.footnote)
+                        .monospacedDigit()
+                        .foregroundStyle(.secondary)
+                }
+
+                Slider(value: $mem.playbackRate, in: MemorizerState.playbackRateRange, step: 0.05)
+            }
         }
     }
 
@@ -343,7 +358,7 @@ struct MemorizerView: View {
                             .stroke(readingPalette.borderColor.opacity(0.35), lineWidth: 0.8)
                     )
             } else {
-                VStack(alignment: .leading, spacing: 12) {
+                VStack(alignment: .leading, spacing: 6) {
                     ForEach(indices, id: \.self) { index in
                         ayahCard(for: index, text: text, surah: surah, totalAyahs: totalAyahs)
                     }
@@ -434,7 +449,7 @@ struct MemorizerView: View {
             }
         }
 
-        return VStack(alignment: .leading, spacing: 12) {
+        return VStack(alignment: .leading, spacing: 8) {
             if showArabic {
                 HStack(alignment: .top, spacing: 12) {
                     Spacer(minLength: 0)
@@ -467,7 +482,7 @@ struct MemorizerView: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.vertical, 12)
+        .padding(.vertical, 8)
         .contentShape(Rectangle())
         .onTapGesture(count: 2) {
             toggleMemorizedAyah(at: index, totalAyahs: totalAyahs, in: surah)
