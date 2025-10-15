@@ -7,7 +7,7 @@
         "key": "Memorizer",
         "location": {
           "startingColumn": 30,
-          "startingLine": 15
+          "startingLine": 21
         }
       },
       {
@@ -15,7 +15,7 @@
         "key": "Reciter",
         "location": {
           "startingColumn": 20,
-          "startingLine": 70
+          "startingLine": 92
         }
       },
       {
@@ -23,7 +23,7 @@
         "key": "%@",
         "location": {
           "startingColumn": 18,
-          "startingLine": 80
+          "startingLine": 112
         }
       },
       {
@@ -31,7 +31,7 @@
         "key": "Sample recitation ready – %@",
         "location": {
           "startingColumn": 19,
-          "startingLine": 102
+          "startingLine": 134
         }
       },
       {
@@ -39,7 +39,7 @@
         "key": "Couldn't load the sample audio. Check your connection.",
         "location": {
           "startingColumn": 19,
-          "startingLine": 106
+          "startingLine": 138
         }
       },
       {
@@ -47,7 +47,7 @@
         "key": "Tap play to simulate playback.",
         "location": {
           "startingColumn": 19,
-          "startingLine": 110
+          "startingLine": 142
         }
       },
       {
@@ -55,7 +55,7 @@
         "key": "Loading Surah Al-Fātiḥah sample…",
         "location": {
           "startingColumn": 22,
-          "startingLine": 97
+          "startingLine": 129
         }
       },
       {
@@ -63,7 +63,7 @@
         "key": "Audio samples are currently provided for Surah Al-Fātiḥah.",
         "location": {
           "startingColumn": 27,
-          "startingLine": 150
+          "startingLine": 182
         }
       },
       {
@@ -71,7 +71,7 @@
         "key": "Hide player",
         "location": {
           "startingColumn": 47,
-          "startingLine": 130
+          "startingLine": 162
         }
       },
       {
@@ -79,7 +79,7 @@
         "key": "Show player",
         "location": {
           "startingColumn": 63,
-          "startingLine": 130
+          "startingLine": 162
         }
       },
       {
@@ -87,7 +87,7 @@
         "key": "Set A",
         "location": {
           "startingColumn": 30,
-          "startingLine": 198
+          "startingLine": 230
         }
       },
       {
@@ -95,7 +95,7 @@
         "key": "Set B",
         "location": {
           "startingColumn": 30,
-          "startingLine": 202
+          "startingLine": 234
         }
       },
       {
@@ -103,23 +103,31 @@
         "key": "Loop",
         "location": {
           "startingColumn": 23,
-          "startingLine": 208
+          "startingLine": 240
         }
       },
       {
         "comment": "",
         "key": "Surah text",
         "location": {
-          "startingColumn": 18,
-          "startingLine": 228
+          "startingColumn": 22,
+          "startingLine": 261
         }
       },
       {
         "comment": "",
-        "key": "Double-click an ayah to toggle its memorized status.",
+        "key": "Fullscreen",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 271
+        }
+      },
+      {
+        "comment": "",
+        "key": "Double-tap an ayah to toggle its memorized status.",
         "location": {
           "startingColumn": 18,
-          "startingLine": 238
+          "startingLine": 307
         }
       },
       {
@@ -127,7 +135,7 @@
         "key": "Language",
         "location": {
           "startingColumn": 20,
-          "startingLine": 231
+          "startingLine": 293
         }
       },
       {
@@ -135,23 +143,31 @@
         "key": "No ayahs memorized yet.",
         "location": {
           "startingColumn": 23,
-          "startingLine": 243
+          "startingLine": 312
         }
       },
       {
         "comment": "",
-        "key": "Ayah %lld",
+        "key": "Reading background",
         "location": {
           "startingColumn": 22,
-          "startingLine": 284
+          "startingLine": 301
         }
       },
       {
         "comment": "",
-        "key": "Memorized",
+        "key": "%lld",
         "location": {
-          "startingColumn": 27,
-          "startingLine": 288
+          "startingColumn": 18,
+          "startingLine": 406
+        }
+      },
+      {
+        "comment": "",
+        "key": "Done",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 494
         }
       },
       {
@@ -159,7 +175,7 @@
         "key": "Choose a surah from the Surahs tab.",
         "location": {
           "startingColumn": 18,
-          "startingLine": 347
+          "startingLine": 511
         }
       }
     ]
