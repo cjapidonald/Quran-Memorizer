@@ -4,20 +4,12 @@ struct MemorizerView: View {
     @EnvironmentObject private var nav: AppNav
     @EnvironmentObject private var prefs: AppPrefsStore
     @EnvironmentObject private var mem: MemorizerState
+    @State private var showPlayerControls = false
+    @State private var textLanguage: SurahTextLanguage = .both
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 16) {
-                if let s = nav.selectedSurah {
-                    header(for: s)
-                    timeline
-                    controls
-                } else {
-                    emptyState
-                }
-                Spacer(minLength: 0)
-            }
-            .padding()
+            content
             .navigationTitle("Memorizer")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -36,11 +28,38 @@ struct MemorizerView: View {
                 }
                 if mem.selectedSurah?.id != nav.selectedSurah?.id {
                     mem.selectedSurah = nav.selectedSurah
+                    showPlayerControls = false
+                    textLanguage = .both
                 }
             }
             .onChange(of: prefs.defaultReciter) { _, newValue in
                 mem.selectedReciter = newValue
             }
+            .onChange(of: nav.selectedSurah) { _, _ in
+                withAnimation(.spring(duration: 0.25)) {
+                    showPlayerControls = false
+                    textLanguage = .both
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var content: some View {
+        if let s = nav.selectedSurah {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 20) {
+                    header(for: s)
+                    playerSection(for: s)
+                    if let text = SurahTexts.text(for: s.id) {
+                        surahTextSection(text)
+                    }
+                }
+                .padding()
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+        } else {
+            emptyState
         }
     }
 
@@ -61,13 +80,6 @@ struct MemorizerView: View {
             Text(s.arabicName)
                 .font(.title3)
                 .foregroundStyle(.secondary)
-            if s.id == 1 {
-                sampleStatus(for: mem.sampleAvailability)
-            } else {
-                Label("Audio samples are currently provided for Surah Al-Fātiḥah.", systemImage: "info.circle")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-            }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
@@ -96,6 +108,54 @@ struct MemorizerView: View {
             Label("Tap play to simulate playback.", systemImage: "play.circle")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
+        }
+    }
+
+    @ViewBuilder
+    private func playerSection(for surah: Surah) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Button {
+                withAnimation(.spring(duration: 0.3)) {
+                    showPlayerControls.toggle()
+                }
+                if !showPlayerControls {
+                    mem.pause()
+                }
+            } label: {
+                HStack {
+                    Image(systemName: showPlayerControls ? "waveform.circle.fill" : "play.circle")
+                        .font(.system(size: 28))
+                    Text(showPlayerControls ? "Hide player" : "Show player")
+                        .font(.headline)
+                    Spacer()
+                    Image(systemName: "chevron.down")
+                        .rotationEffect(.degrees(showPlayerControls ? 180 : 0))
+                        .animation(.easeInOut(duration: 0.2), value: showPlayerControls)
+                }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 14)
+                        .fill(Color.secondary.opacity(0.12))
+                )
+            }
+            .buttonStyle(.plain)
+
+            if showPlayerControls {
+                if surah.id == 1 {
+                    sampleStatus(for: mem.sampleAvailability)
+                        .transition(.opacity.combined(with: .move(edge: .top)))
+                } else {
+                    Label("Audio samples are currently provided for Surah Al-Fātiḥah.", systemImage: "info.circle")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .transition(.opacity)
+                }
+
+                timeline
+                    .transition(.opacity.combined(with: .move(edge: .top)))
+                controls
+                    .transition(.opacity.combined(with: .move(edge: .top)))
+            }
         }
     }
 
@@ -159,6 +219,44 @@ struct MemorizerView: View {
         .buttonStyle(.borderless)
     }
 
+    private func surahTextSection(_ text: SurahTextContent) -> some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Surah text")
+                .font(.headline)
+
+            Picker("Language", selection: $textLanguage) {
+                ForEach(SurahTextLanguage.allCases) { option in
+                    Text(option.title).tag(option)
+                }
+            }
+            .pickerStyle(.segmented)
+
+            VStack(alignment: .leading, spacing: 12) {
+                ForEach(Array(text.arabic.enumerated()), id: \.offset) { index, verse in
+                    VStack(alignment: .leading, spacing: 8) {
+                        if textLanguage != .english {
+                            Text(verse)
+                                .font(.title3)
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                                .multilineTextAlignment(.trailing)
+                        }
+                        if textLanguage != .arabic, index < text.english.count {
+                            Text(text.english[index])
+                                .font(.body)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(14)
+                    .background(
+                        RoundedRectangle(cornerRadius: 14)
+                            .fill(Color.secondary.opacity(0.08))
+                    )
+                }
+            }
+        }
+    }
+
     private var emptyState: some View {
         VStack(spacing: 10) {
             Image(systemName: "list.bullet")
@@ -167,6 +265,22 @@ struct MemorizerView: View {
                 .foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+}
+
+private enum SurahTextLanguage: String, CaseIterable, Identifiable {
+    case arabic
+    case english
+    case both
+
+    var id: String { rawValue }
+
+    var title: String {
+        switch self {
+        case .arabic: return "Arabic"
+        case .english: return "English"
+        case .both: return "Both"
+        }
     }
 }
 
