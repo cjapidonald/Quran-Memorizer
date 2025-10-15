@@ -1,4 +1,5 @@
 import SwiftUI
+import Combine
 
 final class AppPrefsStore: ObservableObject {
     @AppStorage("defaultReciter") private var rawReciter: String = Reciter.saadAlGhamdi.rawValue

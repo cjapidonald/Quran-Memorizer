@@ -1,4 +1,5 @@
 import SwiftUI
+import Combine
 
 enum ThemeStyle: String, CaseIterable { case system, light, dark }
 enum ReadingTheme: String, CaseIterable { case standard, sepia, highContrast }
