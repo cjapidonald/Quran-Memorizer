@@ -402,44 +402,53 @@ struct MemorizerView: View {
         let showArabic = textLanguage != .english
         let showEnglish = textLanguage != .arabic || textLanguage == .memorized
 
-        return VStack(alignment: .leading, spacing: 10) {
-            HStack {
-                Text("Ayah \(ayahNumber)")
-                    .font(.subheadline.weight(.semibold))
-                    .foregroundStyle(readingPalette.primaryTextColor)
-                Spacer()
-                if isMemorized {
-                    Image(systemName: "checkmark.seal.fill")
-                        .font(.title3)
-                        .foregroundStyle(Color.accentColor)
+        let indicator = VStack(spacing: 6) {
+            Text("\(ayahNumber)")
+                .font(.subheadline.weight(.semibold))
+                .foregroundStyle(readingPalette.secondaryTextColor)
+
+            if isMemorized {
+                Image(systemName: "checkmark.seal.fill")
+                    .font(.footnote)
+                    .foregroundStyle(Color.accentColor)
+            }
+        }
+
+        return VStack(alignment: .leading, spacing: 12) {
+            if showArabic {
+                HStack(alignment: .top, spacing: 12) {
+                    Spacer(minLength: 0)
+                    Text(verse)
+                        .font(.custom("KFGQPC Uthmanic Script HAFS", size: 28))
+                        .foregroundStyle(readingPalette.primaryTextColor)
+                        .multilineTextAlignment(.trailing)
+                        .lineSpacing(6)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                    indicator
                 }
             }
 
-            if showArabic {
-                Text(verse)
-                    .font(.custom("KFGQPC Uthmanic Script HAFS", size: 28))
-                    .foregroundStyle(readingPalette.primaryTextColor)
-                    .frame(maxWidth: .infinity, alignment: .trailing)
-                    .multilineTextAlignment(.trailing)
-                    .lineSpacing(6)
-            }
-
             if showEnglish, index < text.english.count {
-                Text(text.english[index])
-                    .font(.body)
-                    .foregroundStyle(readingPalette.secondaryTextColor)
+                if showArabic {
+                    Text(text.english[index])
+                        .font(.body)
+                        .foregroundStyle(readingPalette.secondaryTextColor)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                } else {
+                    HStack(alignment: .top, spacing: 12) {
+                        indicator
+                        Text(text.english[index])
+                            .font(.body)
+                            .foregroundStyle(readingPalette.secondaryTextColor)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        Spacer(minLength: 0)
+                    }
+                }
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(16)
-        .background(
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .fill(readingPalette.cardGradient)
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .stroke(readingPalette.borderColor.opacity(0.35), lineWidth: 0.8)
-        )
+        .padding(.vertical, 12)
+        .contentShape(Rectangle())
         .onTapGesture(count: 2) {
             toggleMemorizedAyah(at: index, totalAyahs: totalAyahs, in: surah)
         }
