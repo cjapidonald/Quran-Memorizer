@@ -28,7 +28,7 @@ struct RootTabView: View {
 private struct SurahsTabIcon: View {
     @EnvironmentObject private var highlights: HighlightStore
     private var progress: Double {
-        let prog = highlights.hifdhProgress(surahs: StaticSurahs.all)
+        let prog = highlights.hifzProgress(surahs: StaticSurahs.all)
         return prog.total == 0 ? 0 : Double(prog.completed) / Double(prog.total)
     }
     var body: some View {

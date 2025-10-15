@@ -28,7 +28,7 @@ final class HighlightStore: ObservableObject {
         save()
     }
 
-    func hifdhProgress(surahs: [Surah]) -> HifdhProgress {
+    func hifzProgress(surahs: [Surah]) -> HifzProgress {
         var completed = 0, inProgress = 0
         for s in surahs {
             switch highlights[s.id] ?? .none {

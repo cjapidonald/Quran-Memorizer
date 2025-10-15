@@ -27,7 +27,7 @@ enum Reciter: String, CaseIterable, Codable {
             forResource: "001",
             withExtension: "mp3",
             subdirectory: "Quranvn/Resources"
-        ) {
+        ) ?? Bundle.main.url(forResource: "001", withExtension: "mp3") {
             return localUrl
         }
 
@@ -40,4 +40,4 @@ enum Reciter: String, CaseIterable, Codable {
     }
 }
 
-struct HifdhProgress { var completed: Int; var inProgress: Int; var total: Int }
+struct HifzProgress { var completed: Int; var inProgress: Int; var total: Int }
