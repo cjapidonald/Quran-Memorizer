@@ -41,7 +41,9 @@ final class HighlightStore: ObservableObject {
     }
 
     private func save() {
-        let compact = highlights.mapValues { $0.rawValue }
+        let compact = highlights.reduce(into: [String: String]()) { partialResult, element in
+            partialResult[String(element.key)] = element.value.rawValue
+        }
         UserDefaults.standard.set(compact, forKey: key)
     }
     private func load() {
