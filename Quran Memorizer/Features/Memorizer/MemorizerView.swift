@@ -26,13 +26,17 @@ struct MemorizerView: View {
             }
             .onChange(of: nav.selectedSurah) { _, newValue in
                 mem.selectedSurah = newValue
-                mem.currentTime = 0
-                mem.duration = 600
-                mem.setLoop(start: 0, end: 30)
-                mem.isPlaying = false
             }
             .onAppear {
-                mem.selectedReciter = prefs.defaultReciter
+                if nav.selectedSurah == nil {
+                    nav.selectedSurah = StaticSurahs.all.first { $0.id == 1 }
+                }
+                if mem.selectedReciter != prefs.defaultReciter {
+                    mem.selectedReciter = prefs.defaultReciter
+                }
+                if mem.selectedSurah?.id != nav.selectedSurah?.id {
+                    mem.selectedSurah = nav.selectedSurah
+                }
             }
             .onChange(of: prefs.defaultReciter) { _, newValue in
                 mem.selectedReciter = newValue
@@ -57,8 +61,42 @@ struct MemorizerView: View {
             Text(s.arabicName)
                 .font(.title3)
                 .foregroundStyle(.secondary)
+            if s.id == 1 {
+                sampleStatus(for: mem.sampleAvailability)
+            } else {
+                Label("Audio samples are currently provided for Surah Al-Fātiḥah.", systemImage: "info.circle")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    @ViewBuilder
+    private func sampleStatus(for status: MemorizerState.SampleAvailability) -> some View {
+        switch status {
+        case .loading:
+            HStack(spacing: 6) {
+                ProgressView()
+                    .progressViewStyle(.circular)
+                    .scaleEffect(0.7, anchor: .center)
+                Text("Loading Surah Al-Fātiḥah sample…")
+            }
+            .font(.footnote)
+            .foregroundStyle(.secondary)
+        case .ready:
+            Label("Sample recitation ready – \(mem.selectedReciter.rawValue)", systemImage: "waveform")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+        case .failed:
+            Label("Couldn't load the sample audio. Check your connection.", systemImage: "exclamationmark.triangle")
+                .font(.footnote)
+                .foregroundStyle(.red)
+        case .none:
+            Label("Tap play to simulate playback.", systemImage: "play.circle")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+        }
     }
 
     private var timeline: some View {

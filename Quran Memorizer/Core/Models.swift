@@ -17,6 +17,18 @@ struct SurahHighlight: Codable, Hashable {
 enum Reciter: String, CaseIterable, Codable {
     case saadAlGhamdi = "Saad Al-Ghamdi"
     case misharyRashid = "Mishary Rashid Alafasy"
+
+    /// Returns a URL to a sample recitation for the given surah if one exists.
+    /// Currently Surah Al-Fātiḥah (1) is provided so users can try the memorizer player.
+    func sampleRecitation(for surah: Surah) -> URL? {
+        guard surah.id == 1 else { return nil }
+        switch self {
+        case .saadAlGhamdi:
+            return URL(string: "https://download.quranicaudio.com/quran/saad_al_ghamdi/001.mp3")
+        case .misharyRashid:
+            return URL(string: "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/001.mp3")
+        }
+    }
 }
 
 struct HifdhProgress { var completed: Int; var inProgress: Int; var total: Int }
