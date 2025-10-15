@@ -1,0 +1,168 @@
+{
+  "source": "/Users/donaldcjapi/Desktop/Quran Memorizer/Quran Memorizer/Features/Memorizer/MemorizerView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Memorizer",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 15
+        }
+      },
+      {
+        "comment": "",
+        "key": "Reciter",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 70
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 80
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sample recitation ready – %@",
+        "location": {
+          "startingColumn": 19,
+          "startingLine": 102
+        }
+      },
+      {
+        "comment": "",
+        "key": "Couldn't load the sample audio. Check your connection.",
+        "location": {
+          "startingColumn": 19,
+          "startingLine": 106
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tap play to simulate playback.",
+        "location": {
+          "startingColumn": 19,
+          "startingLine": 110
+        }
+      },
+      {
+        "comment": "",
+        "key": "Loading Surah Al-Fātiḥah sample…",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 97
+        }
+      },
+      {
+        "comment": "",
+        "key": "Audio samples are currently provided for Surah Al-Fātiḥah.",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 150
+        }
+      },
+      {
+        "comment": "",
+        "key": "Hide player",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 130
+        }
+      },
+      {
+        "comment": "",
+        "key": "Show player",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 130
+        }
+      },
+      {
+        "comment": "",
+        "key": "Set A",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 198
+        }
+      },
+      {
+        "comment": "",
+        "key": "Set B",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 202
+        }
+      },
+      {
+        "comment": "",
+        "key": "Loop",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 208
+        }
+      },
+      {
+        "comment": "",
+        "key": "Surah text",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 228
+        }
+      },
+      {
+        "comment": "",
+        "key": "Double-click an ayah to toggle its memorized status.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 238
+        }
+      },
+      {
+        "comment": "",
+        "key": "Language",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 231
+        }
+      },
+      {
+        "comment": "",
+        "key": "No ayahs memorized yet.",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 243
+        }
+      },
+      {
+        "comment": "",
+        "key": "Ayah %lld",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 284
+        }
+      },
+      {
+        "comment": "",
+        "key": "Memorized",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 288
+        }
+      },
+      {
+        "comment": "",
+        "key": "Choose a surah from the Surahs tab.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 347
+        }
+      }
+    ]
+  },
+  "version": 1
+}
