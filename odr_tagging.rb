@@ -11,8 +11,8 @@
 #   • Ensures ENABLE_ON_DEMAND_RESOURCES = YES on the chosen target
 #   • Scans your project for audio files under your chosen folders (e.g. "Quran/Resources/Mishary01"
 #     and "Quran/Resources/Saad01") and assigns a tag per file:
-#       Quran/Resources/Mishary01/m001.mp3  -> tag "mishary-m001"
-#       Quran/Resources/Saad01/001.mp3      -> tag "saad-001"
+#       Quran/Resources/Mishary01/m001.mp3  -> tag "m001"
+#       Quran/Resources/Saad01/s001.mp3     -> tag "s001"
 #   • If files exist on disk but are not yet in the project, the script can add
 #     them to the Resources build phase automatically (opt-in with --add-missing)
 #
@@ -118,8 +118,8 @@ def sanitize_tag(tag)
   tag.strip.downcase.gsub(/[^a-z0-9._-]+/, '-')
 end
 
-def tag_for(reciter, filename_wo_ext)
-  sanitize_tag("#{reciter}-#{filename_wo_ext}")
+def tag_for(_reciter, filename_wo_ext)
+  sanitize_tag(filename_wo_ext)
 end
 
 def assign_tag!(build_file, tag)
@@ -217,4 +217,4 @@ end
 puts "\nNext steps:"
 puts "  • In Xcode, select your app target → Build Settings → ensure 'Enable On Demand Resources' is YES."
 puts "  • Optionally set 'On Demand Resources Initial Install Tags' for any packs you want preinstalled."
-puts "  • Request your audio at runtime with NSBundleResourceRequest(tags: [\"mishary-m001\"])."
+puts "  • Request your audio at runtime with NSBundleResourceRequest(tags: [\"m001\"])."
