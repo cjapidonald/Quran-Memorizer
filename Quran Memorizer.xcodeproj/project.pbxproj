@@ -13,6 +13,15 @@
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
 		49DDBA522E9F1D0000DA0B23 /* Exceptions for "Quran Memorizer" folder in "Quran Memorizer" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			assetTagsByRelativePath = {
+				Quran/Resources/Mishary01/m001.mp3 = (m001, );
+				Quran/Resources/Mishary01/m002.mp3 = (m002, );
+				Quran/Resources/Mishary01/m003.mp3 = (m003, );
+				Quran/Resources/Mishary01/m004.mp3 = (m004, );
+				Quran/Resources/Saad01/001.mp3 = (s001, );
+				Quran/Resources/Saad01/002.mp3 = (a002, );
+				Quran/Resources/Saad01/003.mp3 = (s003, );
+			};
 			membershipExceptions = (
 				Info.plist,
 			);
@@ -90,6 +99,15 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
+				KnownAssetTags = (
+					a002,
+					m001,
+					m002,
+					m003,
+					m004,
+					s001,
+					s003,
+				);
 				LastSwiftUpdateCheck = 2600;
 				LastUpgradeCheck = 2600;
 				TargetAttributes = {
