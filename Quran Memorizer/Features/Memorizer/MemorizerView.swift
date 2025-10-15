@@ -240,6 +240,21 @@ struct MemorizerView: View {
                 })
             }
             .frame(height: 6)
+
+            VStack(alignment: .leading, spacing: 6) {
+                HStack {
+                    Text("Playback speed")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    Text("\(mem.playbackRate, specifier: "%.2f")×")
+                        .font(.footnote)
+                        .monospacedDigit()
+                        .foregroundStyle(.secondary)
+                }
+
+                Slider(value: $mem.playbackRate, in: MemorizerState.playbackRateRange, step: 0.05)
+            }
         }
     }
 
