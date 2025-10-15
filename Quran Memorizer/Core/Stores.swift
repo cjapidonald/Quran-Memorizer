@@ -46,3 +46,63 @@ final class HighlightStore: ObservableObject {
         highlights = out
     }
 }
+
+final class MemorizedAyahStore: ObservableObject {
+    private let key = "memorizedAyahs.v1"
+    @Published private(set) var memorized: [Int: Set<Int>] = [:]
+
+    init() { load() }
+
+    func isMemorized(surahId: Int, ayah: Int) -> Bool {
+        memorized[surahId]?.contains(ayah) ?? false
+    }
+
+    @discardableResult
+    func toggleMemorized(surahId: Int, ayah: Int) -> Bool {
+        let newValue = !(memorized[surahId]?.contains(ayah) ?? false)
+        setMemorized(newValue, surahId: surahId, ayah: ayah)
+        return newValue
+    }
+
+    func setMemorized(_ isMemorized: Bool, surahId: Int, ayah: Int) {
+        var set = memorized[surahId] ?? []
+        if isMemorized {
+            set.insert(ayah)
+            memorized[surahId] = set
+        } else {
+            set.remove(ayah)
+            if set.isEmpty {
+                memorized.removeValue(forKey: surahId)
+            } else {
+                memorized[surahId] = set
+            }
+        }
+        save()
+    }
+
+    func memorizedAyahs(for surahId: Int) -> [Int] {
+        Array(memorized[surahId] ?? []).sorted()
+    }
+
+    func memorizedCount(for surahId: Int) -> Int {
+        memorized[surahId]?.count ?? 0
+    }
+
+    private func save() {
+        let compact = memorized.reduce(into: [String: [Int]]()) { partialResult, element in
+            partialResult[String(element.key)] = Array(element.value).sorted()
+        }
+        UserDefaults.standard.set(compact, forKey: key)
+    }
+
+    private func load() {
+        guard let dict = UserDefaults.standard.dictionary(forKey: key) as? [String: [Int]] else { return }
+        var out: [Int: Set<Int>] = [:]
+        for (k, v) in dict {
+            if let id = Int(k) {
+                out[id] = Set(v)
+            }
+        }
+        memorized = out
+    }
+}
