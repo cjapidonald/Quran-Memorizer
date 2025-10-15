@@ -1,32 +1,22 @@
-//
-//  Quran_MemorizerApp.swift
-//  Quran Memorizer
-//
-//  Created by Donald Cjapi on 15/10/25.
-//
-
 import SwiftUI
-import SwiftData
 
 @main
 struct Quran_MemorizerApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
+    @StateObject private var nav = AppNav()
+    @StateObject private var theme = ThemeManager()
+    @StateObject private var prefs = AppPrefsStore()
+    @StateObject private var highlights = HighlightStore()
+    @StateObject private var memorizer = MemorizerState()
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootTabView()
+                .environmentObject(nav)
+                .environmentObject(theme)
+                .environmentObject(prefs)
+                .environmentObject(highlights)
+                .environmentObject(memorizer)
+                .preferredColorScheme(theme.colorScheme)
         }
-        .modelContainer(sharedModelContainer)
     }
 }
