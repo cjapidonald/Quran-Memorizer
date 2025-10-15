@@ -119,5 +119,6 @@ private struct SurahRow: View {
         .environmentObject(ThemeManager())
         .environmentObject(AppPrefsStore())
         .environmentObject(HighlightStore())
+        .environmentObject(MemorizedAyahStore())
         .environmentObject(MemorizerState())
 }

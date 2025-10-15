@@ -4,6 +4,8 @@ struct MemorizerView: View {
     @EnvironmentObject private var nav: AppNav
     @EnvironmentObject private var prefs: AppPrefsStore
     @EnvironmentObject private var mem: MemorizerState
+    @EnvironmentObject private var highlights: HighlightStore
+    @EnvironmentObject private var memorizedAyahs: MemorizedAyahStore
     @State private var showPlayerControls = false
     @State private var textLanguage: SurahTextLanguage = .both
 
@@ -52,7 +54,7 @@ struct MemorizerView: View {
                     header(for: s)
                     playerSection(for: s)
                     if let text = SurahTexts.text(for: s.id) {
-                        surahTextSection(text)
+                        surahTextSection(text, for: s)
                     }
                 }
                 .padding()
@@ -219,8 +221,10 @@ struct MemorizerView: View {
         .buttonStyle(.borderless)
     }
 
-    private func surahTextSection(_ text: SurahTextContent) -> some View {
-        VStack(alignment: .leading, spacing: 16) {
+    private func surahTextSection(_ text: SurahTextContent, for surah: Surah) -> some View {
+        let totalAyahs = surah.ayahCount > 0 ? surah.ayahCount : text.arabic.count
+        let indices = ayahIndices(for: text, surah: surah)
+        return VStack(alignment: .leading, spacing: 16) {
             Text("Surah text")
                 .font(.headline)
 
@@ -231,29 +235,108 @@ struct MemorizerView: View {
             }
             .pickerStyle(.segmented)
 
-            VStack(alignment: .leading, spacing: 12) {
-                ForEach(Array(text.arabic.enumerated()), id: \.offset) { index, verse in
-                    VStack(alignment: .leading, spacing: 8) {
-                        if textLanguage != .english {
-                            Text(verse)
-                                .font(.title3)
-                                .frame(maxWidth: .infinity, alignment: .trailing)
-                                .multilineTextAlignment(.trailing)
-                        }
-                        if textLanguage != .arabic, index < text.english.count {
-                            Text(text.english[index])
-                                .font(.body)
-                                .foregroundStyle(.secondary)
-                        }
-                    }
+            Text("Double-click an ayah to toggle its memorized status.")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+
+            if textLanguage == .memorized && indices.isEmpty {
+                Label("No ayahs memorized yet.", systemImage: "bookmark.slash")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(14)
                     .background(
                         RoundedRectangle(cornerRadius: 14)
                             .fill(Color.secondary.opacity(0.08))
                     )
+            } else {
+                VStack(alignment: .leading, spacing: 12) {
+                    ForEach(indices, id: \.self) { index in
+                        ayahCard(for: index, text: text, surah: surah, totalAyahs: totalAyahs)
+                    }
                 }
             }
+        }
+    }
+
+    private func ayahIndices(for text: SurahTextContent, surah: Surah) -> [Int] {
+        let total = text.arabic.count
+        switch textLanguage {
+        case .memorized:
+            return memorizedAyahs
+                .memorizedAyahs(for: surah.id)
+                .map { $0 - 1 }
+                .filter { $0 >= 0 && $0 < total }
+        default:
+            return Array(0..<total)
+        }
+    }
+
+    private func ayahCard(for index: Int, text: SurahTextContent, surah: Surah, totalAyahs: Int) -> some View {
+        let ayahNumber = index + 1
+        let verse = index < text.arabic.count ? text.arabic[index] : ""
+        let isMemorized = memorizedAyahs.isMemorized(surahId: surah.id, ayah: ayahNumber)
+        let showArabic = textLanguage != .english
+        let showEnglish = textLanguage != .arabic || textLanguage == .memorized
+
+        return VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text("Ayah \(ayahNumber)")
+                    .font(.subheadline.weight(.semibold))
+                Spacer()
+                if isMemorized {
+                    Label("Memorized", systemImage: "checkmark.seal.fill")
+                        .font(.caption)
+                        .labelStyle(.titleAndIcon)
+                        .foregroundStyle(.green)
+                }
+            }
+
+            if showArabic {
+                Text(verse)
+                    .font(.title3)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                    .multilineTextAlignment(.trailing)
+            }
+
+            if showEnglish, index < text.english.count {
+                Text(text.english[index])
+                    .font(.body)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(14)
+        .background(
+            RoundedRectangle(cornerRadius: 14)
+                .fill(isMemorized ? Color.accentColor.opacity(0.18) : Color.secondary.opacity(0.08))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 14)
+                .stroke(isMemorized ? Color.accentColor.opacity(0.35) : Color.clear, lineWidth: 1)
+        )
+        .onTapGesture(count: 2) {
+            toggleMemorizedAyah(at: index, totalAyahs: totalAyahs, in: surah)
+        }
+    }
+
+    private func toggleMemorizedAyah(at index: Int, totalAyahs: Int, in surah: Surah) {
+        let ayahNumber = index + 1
+        memorizedAyahs.toggleMemorized(surahId: surah.id, ayah: ayahNumber)
+
+        let memorizedCount = memorizedAyahs.memorizedCount(for: surah.id)
+        let clampedTotal = max(totalAyahs, ayahNumber)
+        let newState: HighlightState
+        if memorizedCount == 0 {
+            newState = .none
+        } else if memorizedCount < clampedTotal {
+            newState = .inProgress
+        } else {
+            newState = .memorized
+        }
+
+        withAnimation(.spring(duration: 0.25)) {
+            highlights.setState(newState, for: surah.id)
         }
     }
 
@@ -272,6 +355,7 @@ private enum SurahTextLanguage: String, CaseIterable, Identifiable {
     case arabic
     case english
     case both
+    case memorized
 
     var id: String { rawValue }
 
@@ -280,6 +364,7 @@ private enum SurahTextLanguage: String, CaseIterable, Identifiable {
         case .arabic: return "Arabic"
         case .english: return "English"
         case .both: return "Both"
+        case .memorized: return "Memorized"
         }
     }
 }
@@ -290,5 +375,6 @@ private enum SurahTextLanguage: String, CaseIterable, Identifiable {
         .environmentObject(ThemeManager())
         .environmentObject(AppPrefsStore())
         .environmentObject(HighlightStore())
+        .environmentObject(MemorizedAyahStore())
         .environmentObject(MemorizerState())
 }
