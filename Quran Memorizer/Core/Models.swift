@@ -20,6 +20,7 @@ enum Reciter: String, CaseIterable, Codable {
 
     /// Returns a URL to a sample recitation for the given surah if one exists.
     /// Currently Surah Al-Fātiḥah (1) is provided so users can try the memorizer player.
+    /// The clip is bundled in the app at `Quranvn/Resources/001.mp3` so playback works offline.
     func sampleRecitation(for surah: Surah) -> URL? {
         guard surah.id == 1 else { return nil }
         if let localUrl = Bundle.main.url(
