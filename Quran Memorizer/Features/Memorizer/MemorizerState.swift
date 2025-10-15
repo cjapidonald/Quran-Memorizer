@@ -43,11 +43,14 @@ final class MemorizerState: ObservableObject {
         guard !isPlaying else { return }
         if let player {
             configureAudioSession()
-            if isLooping && currentTime >= loopEnd {
+            if currentTime < loopStart || currentTime >= loopEnd {
                 seek(to: loopStart)
             }
             player.play()
         } else {
+            if currentTime < loopStart || currentTime >= loopEnd {
+                seek(to: loopStart)
+            }
             startTimer()
         }
         isPlaying = true
@@ -75,13 +78,17 @@ final class MemorizerState: ObservableObject {
     }
 
     func setLoop(start: TimeInterval? = nil, end: TimeInterval? = nil) {
+        let previousStart = loopStart
+
         if let s = start { loopStart = max(0, min(s, duration)) }
         if let e = end   { loopEnd   = max(loopStart, min(e, duration)) }
         if loopEnd - loopStart < 1 { loopEnd = min(duration, loopStart + 1) } // min 1s
-        if currentTime < loopStart || currentTime > loopEnd { currentTime = loopStart }
-        if isLooping, let player {
-            let cmTime = CMTime(seconds: loopStart, preferredTimescale: 600)
-            player.seek(to: cmTime, toleranceBefore: .zero, toleranceAfter: .zero)
+
+        let startChanged = loopStart != previousStart
+        let outOfRange = currentTime < loopStart || currentTime > loopEnd
+
+        if startChanged || outOfRange || isLooping {
+            seek(to: loopStart)
         }
     }
 
@@ -94,6 +101,11 @@ final class MemorizerState: ObservableObject {
                 if next > self.loopEnd {
                     next = self.loopStart
                 }
+            } else if next >= self.loopEnd {
+                next = self.loopEnd
+                self.pause()
+                self.currentTime = next
+                return
             }
             if next >= self.duration {
                 next = self.isLooping ? self.loopStart : self.duration
@@ -141,8 +153,13 @@ final class MemorizerState: ObservableObject {
         timeObserverToken = player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.2, preferredTimescale: 600), queue: .main) { [weak self] time in
             guard let self = self else { return }
             self.currentTime = time.seconds
-            if self.isLooping && self.currentTime >= self.loopEnd {
-                self.seek(to: self.loopStart)
+            if self.currentTime >= self.loopEnd {
+                if self.isLooping {
+                    self.seek(to: self.loopStart)
+                } else {
+                    self.pause()
+                    self.seek(to: self.loopEnd)
+                }
             }
         }
 
