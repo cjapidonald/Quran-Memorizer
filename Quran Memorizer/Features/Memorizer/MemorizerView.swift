@@ -133,9 +133,19 @@ struct MemorizerView: View {
                 .font(.footnote)
                 .foregroundStyle(.secondary)
         case .failed:
-            Label("Couldn't download the audio. Check your connection.", systemImage: "exclamationmark.triangle")
-                .font(.footnote)
-                .foregroundStyle(.red)
+            VStack(alignment: .leading, spacing: 8) {
+                Label("Couldn't download the audio. Check your connection.", systemImage: "exclamationmark.triangle")
+                    .font(.footnote)
+                    .foregroundStyle(.red)
+                Button {
+                    mem.downloadCurrentSample()
+                } label: {
+                    Label("Retry", systemImage: "arrow.clockwise")
+                        .font(.footnote.weight(.medium))
+                }
+                .buttonStyle(.bordered)
+                .controlSize(.small)
+            }
         case .none:
             Label("Tap Download to save this recitation for offline use.", systemImage: "arrow.down.circle")
                 .font(.footnote)

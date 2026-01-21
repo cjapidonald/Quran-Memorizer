@@ -48,6 +48,10 @@ final class MemorizerState: ObservableObject {
     private var resourceTask: Task<Void, Never>?
     private var resourceRequest: NSBundleResourceRequest?
 
+    /// Starts or resumes playback.
+    /// - When an AVPlayer is loaded, configures audio session and seeks to loop start.
+    /// - When no player exists (simulation mode), runs a timer to simulate time progression.
+    ///   This allows the UI to function before audio is downloaded.
     func play() {
         guard !isPlaying else { return }
         isPlaying = true
@@ -56,6 +60,7 @@ final class MemorizerState: ObservableObject {
             configureAudioSession()
             seek(to: loopStart)
         } else {
+            // Simulation mode: no audio loaded, just increment time via timer
             seek(to: loopStart)
             startTimer()
         }
@@ -105,6 +110,9 @@ final class MemorizerState: ObservableObject {
         prepareForCurrentSelection()
     }
 
+    /// Simulation timer for when no AVPlayer is loaded.
+    /// Increments currentTime at 50ms intervals to simulate playback progression.
+    /// Handles loop boundaries and playback rate adjustments.
     private func startTimer() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [weak self] _ in

@@ -51,9 +51,42 @@ struct SettingsView: View {
                     }
                 }
 
-                Section("Account") {
-                    Button("Sign in with Apple (coming soon)") { showSignin = true }
-                    Button("Delete account (coming soon)", role: .destructive) { showDelete = true }
+                Section {
+                    Button {
+                        showSignin = true
+                    } label: {
+                        HStack {
+                            Label("Sign in with Apple", systemImage: "apple.logo")
+                            Spacer()
+                            Text("Coming Soon")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                                .background(Capsule().fill(Color.secondary.opacity(0.15)))
+                        }
+                    }
+                    .disabled(true)
+
+                    Button(role: .destructive) {
+                        showDelete = true
+                    } label: {
+                        HStack {
+                            Label("Delete account", systemImage: "trash")
+                            Spacer()
+                            Text("Coming Soon")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                                .background(Capsule().fill(Color.secondary.opacity(0.15)))
+                        }
+                    }
+                    .disabled(true)
+                } header: {
+                    Text("Account")
+                } footer: {
+                    Text("iCloud sync and account features will be available in a future update.")
                 }
 
                 Section("About") {
