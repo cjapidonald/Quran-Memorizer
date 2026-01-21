@@ -4,9 +4,6 @@ import SwiftUI
 struct Quran_MemorizerApp: App {
     @StateObject private var nav = AppNav()
     @StateObject private var theme = ThemeManager()
-    @StateObject private var prefs = AppPrefsStore()
-    @StateObject private var highlights = HighlightStore()
-    @StateObject private var memorizedAyahs = MemorizedAyahStore()
     @StateObject private var memorizer = MemorizerState()
 
     var body: some Scene {
@@ -14,15 +11,18 @@ struct Quran_MemorizerApp: App {
             RootTabView()
                 .environmentObject(nav)
                 .environmentObject(theme)
-                .environmentObject(prefs)
-                .environmentObject(highlights)
-                .environmentObject(memorizedAyahs)
+                .environmentObject(AppPrefsStore.shared)
+                .environmentObject(HighlightStore.shared)
+                .environmentObject(MemorizedAyahStore.shared)
                 .environmentObject(memorizer)
                 .environmentObject(QariService.shared)
                 .environmentObject(AudioDownloadManager.shared)
+                .environmentObject(AuthManager.shared)
+                .environmentObject(CloudSyncManager.shared)
                 .preferredColorScheme(theme.colorScheme)
                 .task {
                     await QariService.shared.fetchQaris()
+                    AuthManager.shared.checkAuthStatus()
                 }
         }
     }

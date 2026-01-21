@@ -6,8 +6,6 @@ struct SettingsView: View {
     @EnvironmentObject private var prefs: AppPrefsStore
     @EnvironmentObject private var downloadManager: AudioDownloadManager
     @State private var showShare = false
-    @State private var showDelete = false
-    @State private var showSignin = false
     @State private var showDeleteAllConfirm = false
     private let optionColumns: [GridItem] = [GridItem(.adaptive(minimum: 120), spacing: 12)]
 
@@ -84,41 +82,15 @@ struct SettingsView: View {
                 }
 
                 Section {
-                    Button {
-                        showSignin = true
+                    NavigationLink {
+                        AccountView()
                     } label: {
-                        HStack {
-                            Label("Sign in with Apple", systemImage: "apple.logo")
-                            Spacer()
-                            Text("Coming Soon")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 4)
-                                .background(Capsule().fill(Color.secondary.opacity(0.15)))
-                        }
+                        Label("Account & iCloud Sync", systemImage: "person.crop.circle")
                     }
-                    .disabled(true)
-
-                    Button(role: .destructive) {
-                        showDelete = true
-                    } label: {
-                        HStack {
-                            Label("Delete account", systemImage: "trash")
-                            Spacer()
-                            Text("Coming Soon")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 4)
-                                .background(Capsule().fill(Color.secondary.opacity(0.15)))
-                        }
-                    }
-                    .disabled(true)
                 } header: {
                     Text("Account")
                 } footer: {
-                    Text("iCloud sync and account features will be available in a future update.")
+                    Text("Sign in with Apple to sync your progress across devices.")
                 }
 
                 Section("About") {
@@ -129,17 +101,6 @@ struct SettingsView: View {
             .navigationTitle("Settings")
             .sheet(isPresented: $showShare) {
                 ShareSheet(activityItems: ["Check out Quran Memorizer — a simple app for hifz with A↔B loop playback."])
-            }
-            .alert("Sign-in", isPresented: $showSignin) {
-                Button("OK", role: .cancel) { }
-            } message: {
-                Text("Sign in will be added later.")
-            }
-            .alert("Delete account", isPresented: $showDelete) {
-                Button("Cancel", role: .cancel) { }
-                Button("OK", role: .destructive) { }
-            } message: {
-                Text("This will be implemented with CloudKit later.")
             }
             .alert("Delete All Downloads?", isPresented: $showDeleteAllConfirm) {
                 Button("Cancel", role: .cancel) { }

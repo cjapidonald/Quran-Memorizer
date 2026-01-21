@@ -2,6 +2,8 @@ import SwiftUI
 import Combine
 
 final class AppPrefsStore: ObservableObject {
+    static let shared = AppPrefsStore()
+
     // Legacy support for old enum-based reciter
     @AppStorage("defaultReciter") private var rawReciter: String = Reciter.saadAlGhamdi.rawValue
     var defaultReciter: Reciter {
@@ -24,6 +26,8 @@ final class AppPrefsStore: ObservableObject {
 
 @MainActor
 final class HighlightStore: ObservableObject {
+    static let shared = HighlightStore()
+
     private let key = "surahHighlights.v1"
     @Published private(set) var highlights: [Int: HighlightState] = [:]
     init() { load() }
@@ -39,6 +43,7 @@ final class HighlightStore: ObservableObject {
         }
         highlights = copy
         save()
+        syncToCloudIfNeeded()
     }
 
     func hifzProgress(surahs: [Surah]) -> HifzProgress {
@@ -53,12 +58,19 @@ final class HighlightStore: ObservableObject {
         return .init(completed: completed, inProgress: inProgress, total: surahs.count)
     }
 
+    /// Replace all highlights (used by CloudKit sync)
+    func replaceAll(_ newHighlights: [Int: HighlightState]) {
+        highlights = newHighlights
+        save()
+    }
+
     private func save() {
         let compact = highlights.reduce(into: [String: String]()) { partialResult, element in
             partialResult[String(element.key)] = element.value.rawValue
         }
         UserDefaults.standard.set(compact, forKey: key)
     }
+
     private func load() {
         guard let dict = UserDefaults.standard.dictionary(forKey: key) as? [String: String] else { return }
         var out: [Int: HighlightState] = [:]
@@ -67,10 +79,19 @@ final class HighlightStore: ObservableObject {
         }
         highlights = out
     }
+
+    private func syncToCloudIfNeeded() {
+        guard AuthManager.shared.isSignedIn else { return }
+        Task {
+            await CloudSyncManager.shared.syncToCloud()
+        }
+    }
 }
 
 @MainActor
 final class MemorizedAyahStore: ObservableObject {
+    static let shared = MemorizedAyahStore()
+
     private let key = "memorizedAyahs.v1"
     @Published private(set) var memorized: [Int: Set<Int>] = [:]
 
@@ -103,6 +124,7 @@ final class MemorizedAyahStore: ObservableObject {
         }
         memorized = updated
         save()
+        syncToCloudIfNeeded()
     }
 
     func memorizedAyahs(for surahId: Int) -> [Int] {
@@ -111,6 +133,12 @@ final class MemorizedAyahStore: ObservableObject {
 
     func memorizedCount(for surahId: Int) -> Int {
         memorized[surahId]?.count ?? 0
+    }
+
+    /// Replace all memorized ayahs (used by CloudKit sync)
+    func replaceAll(_ newMemorized: [Int: Set<Int>]) {
+        memorized = newMemorized
+        save()
     }
 
     private func save() {
@@ -129,5 +157,12 @@ final class MemorizedAyahStore: ObservableObject {
             }
         }
         memorized = out
+    }
+
+    private func syncToCloudIfNeeded() {
+        guard AuthManager.shared.isSignedIn else { return }
+        Task {
+            await CloudSyncManager.shared.syncToCloud()
+        }
     }
 }

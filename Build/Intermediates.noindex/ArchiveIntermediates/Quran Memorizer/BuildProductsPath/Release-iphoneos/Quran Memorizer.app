@@ -1,1 +1,0 @@
-../../InstallationBuildProductsLocation/Applications/Quran Memorizer.app
