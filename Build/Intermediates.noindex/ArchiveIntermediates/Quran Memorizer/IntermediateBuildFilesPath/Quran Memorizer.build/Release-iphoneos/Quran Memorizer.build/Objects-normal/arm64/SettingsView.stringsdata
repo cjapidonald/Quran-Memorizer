@@ -1,5 +1,5 @@
 {
-  "source": "/Users/donaldcjapi/Desktop/Quran Memorizer/Quran Memorizer/Features/Settings/SettingsView.swift",
+  "source": "/Users/donaldcjapi/Desktop/Quran memorizer/Quran Memorizer/Features/Settings/SettingsView.swift",
   "tables": {
     "Localizable": [
       {
@@ -7,7 +7,7 @@
         "key": "Settings",
         "location": {
           "startingColumn": 30,
-          "startingLine": 64
+          "startingLine": 129
         }
       },
       {
@@ -15,7 +15,7 @@
         "key": "Sign-in",
         "location": {
           "startingColumn": 20,
-          "startingLine": 68
+          "startingLine": 133
         }
       },
       {
@@ -23,7 +23,15 @@
         "key": "Delete account",
         "location": {
           "startingColumn": 20,
-          "startingLine": 73
+          "startingLine": 138
+        }
+      },
+      {
+        "comment": "",
+        "key": "Delete All Downloads?",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 144
         }
       },
       {
@@ -31,23 +39,7 @@
         "key": "Appearance",
         "location": {
           "startingColumn": 25,
-          "startingLine": 15
-        }
-      },
-      {
-        "comment": "",
-        "key": "Audio",
-        "location": {
-          "startingColumn": 25,
-          "startingLine": 36
-        }
-      },
-      {
-        "comment": "",
-        "key": "Account",
-        "location": {
-          "startingColumn": 25,
-          "startingLine": 54
+          "startingLine": 17
         }
       },
       {
@@ -55,7 +47,7 @@
         "key": "About",
         "location": {
           "startingColumn": 25,
-          "startingLine": 59
+          "startingLine": 124
         }
       },
       {
@@ -63,7 +55,7 @@
         "key": "Light mode",
         "location": {
           "startingColumn": 34,
-          "startingLine": 21
+          "startingLine": 23
         }
       },
       {
@@ -71,7 +63,7 @@
         "key": "Switch between the dark (default) and white interface.",
         "location": {
           "startingColumn": 34,
-          "startingLine": 23
+          "startingLine": 25
         }
       },
       {
@@ -79,31 +71,135 @@
         "key": "Glass intensity",
         "location": {
           "startingColumn": 30,
-          "startingLine": 31
+          "startingLine": 33
         }
       },
       {
         "comment": "",
-        "key": "Default reciter",
+        "key": "Current Reciter",
         "location": {
-          "startingColumn": 30,
-          "startingLine": 38
+          "startingColumn": 31,
+          "startingLine": 40
         }
       },
       {
         "comment": "",
-        "key": "Sign in with Apple (coming soon)",
+        "key": "Browse All Reciters",
         "location": {
-          "startingColumn": 28,
+          "startingColumn": 31,
+          "startingLine": 50
+        }
+      },
+      {
+        "comment": "",
+        "key": "Audio",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 53
+        }
+      },
+      {
+        "comment": "",
+        "key": "Choose from 100+ reciters and download surahs for offline listening.",
+        "location": {
+          "startingColumn": 26,
           "startingLine": 55
         }
       },
       {
         "comment": "",
-        "key": "Delete account (coming soon)",
+        "key": "Storage Used",
         "location": {
-          "startingColumn": 28,
-          "startingLine": 56
+          "startingColumn": 31,
+          "startingLine": 60
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 69
+        }
+      },
+      {
+        "comment": "",
+        "key": "Downloaded Surahs",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 67
+        }
+      },
+      {
+        "comment": "",
+        "key": "Delete All Downloads",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 77
+        }
+      },
+      {
+        "comment": "",
+        "key": "Offline Storage",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 81
+        }
+      },
+      {
+        "comment": "",
+        "key": "Downloaded surahs are stored on your device for offline listening.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 83
+        }
+      },
+      {
+        "comment": "",
+        "key": "Coming Soon",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 93
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sign in with Apple",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 91
+        }
+      },
+      {
+        "comment": "",
+        "key": "Coming Soon",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 109
+        }
+      },
+      {
+        "comment": "",
+        "key": "Delete account",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 107
+        }
+      },
+      {
+        "comment": "",
+        "key": "Account",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 119
+        }
+      },
+      {
+        "comment": "",
+        "key": "iCloud sync and account features will be available in a future update.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 121
         }
       },
       {
@@ -111,7 +207,7 @@
         "key": "Quran Memorizer\nDeveloper: Donald Cjapi (2025)",
         "location": {
           "startingColumn": 26,
-          "startingLine": 60
+          "startingLine": 125
         }
       },
       {
@@ -119,7 +215,7 @@
         "key": "Share this app",
         "location": {
           "startingColumn": 28,
-          "startingLine": 61
+          "startingLine": 126
         }
       },
       {
@@ -127,7 +223,7 @@
         "key": "OK",
         "location": {
           "startingColumn": 24,
-          "startingLine": 69
+          "startingLine": 134
         }
       },
       {
@@ -135,7 +231,7 @@
         "key": "Sign in will be added later.",
         "location": {
           "startingColumn": 22,
-          "startingLine": 71
+          "startingLine": 136
         }
       },
       {
@@ -143,7 +239,7 @@
         "key": "Cancel",
         "location": {
           "startingColumn": 24,
-          "startingLine": 74
+          "startingLine": 139
         }
       },
       {
@@ -151,7 +247,7 @@
         "key": "OK",
         "location": {
           "startingColumn": 24,
-          "startingLine": 75
+          "startingLine": 140
         }
       },
       {
@@ -159,7 +255,31 @@
         "key": "This will be implemented with CloudKit later.",
         "location": {
           "startingColumn": 22,
-          "startingLine": 77
+          "startingLine": 142
+        }
+      },
+      {
+        "comment": "",
+        "key": "Cancel",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 145
+        }
+      },
+      {
+        "comment": "",
+        "key": "Delete All",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 146
+        }
+      },
+      {
+        "comment": "",
+        "key": "This will remove all %lld downloaded surahs and free up %@ of storage.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 150
         }
       }
     ]
