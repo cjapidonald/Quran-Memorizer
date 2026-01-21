@@ -26,6 +26,10 @@ struct MemorizerView: View {
             }
             .onChange(of: nav.selectedSurah) { _, newValue in
                 mem.selectedSurah = newValue
+                withAnimation(.spring(duration: 0.25)) {
+                    showPlayerControls = false
+                    textLanguage = .both
+                }
             }
             .onAppear {
                 if nav.selectedSurah == nil {
@@ -43,12 +47,6 @@ struct MemorizerView: View {
             }
             .onChange(of: prefs.defaultReciter) { _, newValue in
                 mem.selectedReciter = newValue
-            }
-            .onChange(of: nav.selectedSurah) { _, _ in
-                withAnimation(.spring(duration: 0.25)) {
-                    showPlayerControls = false
-                    textLanguage = .both
-                }
             }
             .onChange(of: theme.themeStyle) { _, _ in
                 ensureValidReadingTheme()
@@ -435,7 +433,7 @@ struct MemorizerView: View {
         let verse = index < text.arabic.count ? text.arabic[index] : ""
         let isMemorized = memorizedAyahs.isMemorized(surahId: surah.id, ayah: ayahNumber)
         let showArabic = textLanguage != .english
-        let showEnglish = textLanguage != .arabic || textLanguage == .memorized
+        let showEnglish = textLanguage != .arabic
 
         let indicator = VStack(spacing: 6) {
             Text("\(ayahNumber)")
