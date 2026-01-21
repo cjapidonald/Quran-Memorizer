@@ -36,7 +36,7 @@ enum Reciter: String, CaseIterable, Codable {
     private var baseUrlString: String {
         switch self {
         case .saadAlGhamdi:
-            return "https://download.quranicaudio.com/quran/saad_al_ghamdi/"
+            return "https://download.quranicaudio.com/quran/sa3d_al-ghaamidi/complete/"
         case .misharyRashid:
             return "https://download.quranicaudio.com/quran/mishaari_raashid_al_3afaasee/"
         }
