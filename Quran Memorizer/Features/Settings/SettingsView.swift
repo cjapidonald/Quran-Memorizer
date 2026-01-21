@@ -4,9 +4,11 @@ import UIKit
 struct SettingsView: View {
     @EnvironmentObject private var theme: ThemeManager
     @EnvironmentObject private var prefs: AppPrefsStore
+    @EnvironmentObject private var downloadManager: AudioDownloadManager
     @State private var showShare = false
     @State private var showDelete = false
     @State private var showSignin = false
+    @State private var showDeleteAllConfirm = false
     private let optionColumns: [GridItem] = [GridItem(.adaptive(minimum: 120), spacing: 12)]
 
     var body: some View {
@@ -33,22 +35,52 @@ struct SettingsView: View {
                     }
                 }
 
-                Section("Audio") {
-                    VStack(alignment: .leading, spacing: 12) {
-                        Text("Default reciter")
-                            .font(.footnote.weight(.semibold))
+                Section {
+                    HStack {
+                        Label("Current Reciter", systemImage: "person.wave.2")
+                        Spacer()
+                        Text(prefs.selectedQariName)
                             .foregroundStyle(.secondary)
-                        LazyVGrid(columns: optionColumns, spacing: 12) {
-                            ForEach(Reciter.allCases, id: \.self) { reciter in
-                                Button {
-                                    prefs.defaultReciter = reciter
-                                } label: {
-                                    selectionButton(title: reciter.rawValue, isSelected: prefs.defaultReciter == reciter)
-                                }
-                                .buttonStyle(.plain)
-                            }
+                            .lineLimit(1)
+                    }
+
+                    NavigationLink {
+                        ReciterBrowserView()
+                    } label: {
+                        Label("Browse All Reciters", systemImage: "music.note.list")
+                    }
+                } header: {
+                    Text("Audio")
+                } footer: {
+                    Text("Choose from 100+ reciters and download surahs for offline listening.")
+                }
+
+                Section {
+                    HStack {
+                        Label("Storage Used", systemImage: "internaldrive")
+                        Spacer()
+                        Text(downloadManager.formattedStorageUsed)
+                            .foregroundStyle(.secondary)
+                    }
+
+                    HStack {
+                        Label("Downloaded Surahs", systemImage: "arrow.down.circle.fill")
+                        Spacer()
+                        Text("\(downloadManager.downloads.count)")
+                            .foregroundStyle(.secondary)
+                    }
+
+                    if !downloadManager.downloads.isEmpty {
+                        Button(role: .destructive) {
+                            showDeleteAllConfirm = true
+                        } label: {
+                            Label("Delete All Downloads", systemImage: "trash")
                         }
                     }
+                } header: {
+                    Text("Offline Storage")
+                } footer: {
+                    Text("Downloaded surahs are stored on your device for offline listening.")
                 }
 
                 Section {
@@ -108,6 +140,14 @@ struct SettingsView: View {
                 Button("OK", role: .destructive) { }
             } message: {
                 Text("This will be implemented with CloudKit later.")
+            }
+            .alert("Delete All Downloads?", isPresented: $showDeleteAllConfirm) {
+                Button("Cancel", role: .cancel) { }
+                Button("Delete All", role: .destructive) {
+                    downloadManager.deleteAllDownloads()
+                }
+            } message: {
+                Text("This will remove all \(downloadManager.downloads.count) downloaded surahs and free up \(downloadManager.formattedStorageUsed) of storage.")
             }
         }
     }

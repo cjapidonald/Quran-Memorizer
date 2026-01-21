@@ -18,7 +18,12 @@ struct Quran_MemorizerApp: App {
                 .environmentObject(highlights)
                 .environmentObject(memorizedAyahs)
                 .environmentObject(memorizer)
+                .environmentObject(QariService.shared)
+                .environmentObject(AudioDownloadManager.shared)
                 .preferredColorScheme(theme.colorScheme)
+                .task {
+                    await QariService.shared.fetchQaris()
+                }
         }
     }
 }

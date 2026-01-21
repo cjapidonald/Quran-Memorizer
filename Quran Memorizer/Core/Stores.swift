@@ -2,10 +2,23 @@ import SwiftUI
 import Combine
 
 final class AppPrefsStore: ObservableObject {
+    // Legacy support for old enum-based reciter
     @AppStorage("defaultReciter") private var rawReciter: String = Reciter.saadAlGhamdi.rawValue
     var defaultReciter: Reciter {
         get { Reciter(rawValue: rawReciter) ?? .saadAlGhamdi }
         set { rawReciter = newValue.rawValue; objectWillChange.send() }
+    }
+
+    // New dynamic qari support
+    @AppStorage("selectedQariId") var selectedQariId: Int = 5 // Default: Mishary
+    @AppStorage("selectedQariPath") var selectedQariPath: String = "mishaari_raashid_al_3afaasee/"
+    @AppStorage("selectedQariName") var selectedQariName: String = "Mishari Rashid al-`Afasy"
+
+    /// Get audio URL for a surah using the selected qari
+    func audioURL(for surahId: Int) -> URL? {
+        guard (1...114).contains(surahId) else { return nil }
+        let paddedId = String(format: "%03d", surahId)
+        return URL(string: "https://download.quranicaudio.com/quran/\(selectedQariPath)\(paddedId).mp3")
     }
 }
 

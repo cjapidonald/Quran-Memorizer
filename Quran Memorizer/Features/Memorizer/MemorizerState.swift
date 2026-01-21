@@ -27,6 +27,16 @@ final class MemorizerState: ObservableObject {
         }
     }
 
+    // Dynamic qari support
+    @Published var selectedQariId: Int = 5
+    @Published var selectedQariPath: String = "mishaari_raashid_al_3afaasee/" {
+        didSet {
+            if selectedQariPath != oldValue {
+                prepareForCurrentSelection()
+            }
+        }
+    }
+
     @Published var isPlaying: Bool = false
     @Published var isLooping: Bool = false
     @Published var duration: TimeInterval = 600
@@ -266,6 +276,13 @@ final class MemorizerState: ObservableObject {
     private func fetchSample(for surah: Surah, reciter: Reciter) async {
         defer { resourceTask = nil }
 
+        // First, check if we have a downloaded file from AudioDownloadManager
+        if let localURL = AudioDownloadManager.shared.localURL(qariId: selectedQariId, surahId: surah.id) {
+            loadSample(from: localURL)
+            return
+        }
+
+        // Next, try bundled ODR resources
         var acquiredRequest: NSBundleResourceRequest?
 
         if let tag = reciter.onDemandResourceTag(for: surah.id) {
@@ -278,9 +295,7 @@ final class MemorizerState: ObservableObject {
                 if error is CancellationError {
                     return
                 }
-                resetForSimulation()
-                sampleAvailability = .failed
-                return
+                // Fall through to streaming
             }
 
             if Task.isCancelled {
@@ -292,27 +307,26 @@ final class MemorizerState: ObservableObject {
             resourceRequest = request
         }
 
-        guard let url = reciter.sampleRecitation(for: surah) else {
-            acquiredRequest?.endAccessingResources()
-            if resourceRequest === acquiredRequest {
-                resourceRequest = nil
-            }
-            resetForSimulation()
-            sampleAvailability = surah.id == 1 ? .failed : .none
+        // Try local bundled file or streaming URL
+        if let url = reciter.sampleRecitation(for: surah) {
+            loadSample(from: url)
             return
         }
 
-        if reciter.onDemandResourceTag(for: surah.id) != nil && !url.isFileURL {
-            acquiredRequest?.endAccessingResources()
-            if resourceRequest === acquiredRequest {
-                resourceRequest = nil
-            }
-            resetForSimulation()
-            sampleAvailability = .failed
+        // Try dynamic qari streaming URL
+        let paddedId = String(format: "%03d", surah.id)
+        if let streamURL = URL(string: "https://download.quranicaudio.com/quran/\(selectedQariPath)\(paddedId).mp3") {
+            loadSample(from: streamURL)
             return
         }
 
-        loadSample(from: url)
+        // All options exhausted
+        acquiredRequest?.endAccessingResources()
+        if resourceRequest === acquiredRequest {
+            resourceRequest = nil
+        }
+        resetForSimulation()
+        sampleAvailability = .failed
     }
 
     private func applyPlaybackRateIfNeeded() {

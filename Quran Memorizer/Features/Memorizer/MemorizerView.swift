@@ -38,6 +38,9 @@ struct MemorizerView: View {
                 if mem.selectedReciter != prefs.defaultReciter {
                     mem.selectedReciter = prefs.defaultReciter
                 }
+                // Sync dynamic qari settings
+                mem.selectedQariId = prefs.selectedQariId
+                mem.selectedQariPath = prefs.selectedQariPath
                 if mem.selectedSurah?.id != nav.selectedSurah?.id {
                     mem.selectedSurah = nav.selectedSurah
                     showPlayerControls = false
@@ -47,6 +50,10 @@ struct MemorizerView: View {
             }
             .onChange(of: prefs.defaultReciter) { _, newValue in
                 mem.selectedReciter = newValue
+            }
+            .onChange(of: prefs.selectedQariPath) { _, newValue in
+                mem.selectedQariId = prefs.selectedQariId
+                mem.selectedQariPath = newValue
             }
             .onChange(of: theme.themeStyle) { _, _ in
                 ensureValidReadingTheme()
