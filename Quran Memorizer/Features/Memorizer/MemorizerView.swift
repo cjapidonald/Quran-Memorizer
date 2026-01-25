@@ -61,6 +61,14 @@ struct MemorizerView: View {
             .onChange(of: colorScheme) { _, _ in
                 ensureValidReadingTheme()
             }
+            .onChange(of: showFullscreen) { _, isPresented in
+                if isPresented {
+                    mem.pause()
+                    withAnimation(.spring(duration: 0.25)) {
+                        showPlayerControls = false
+                    }
+                }
+            }
         }
         .fullScreenCover(isPresented: $showFullscreen, onDismiss: {
             fullScreenSurah = nil
